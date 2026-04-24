@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP4视频支持测试</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">MP4视频支持测试</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">文件上传测试</h2>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                <p class="text-gray-600 mb-4">拖拽或点击上传MP4视频文件</p>
+                <input type="file" id="file-input" accept="image/*,video/*,.mp4" class="hidden">
+                <button onclick="document.getElementById('file-input').click()" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    选择文件
+                </button>
+            </div>
+            
+            <div id="file-info" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                <h3 class="font-bold mb-2">文件信息：</h3>
+                <p id="file-name"></p>
+                <p id="file-type"></p>
+                <p id="file-size"></p>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-4">视频预览</h2>
+            <div id="video-container" class="hidden">
+                <video id="video-preview" class="w-full h-64 object-cover rounded-lg" controls>
+                    您的浏览器不支持视频播放。
+                </video>
+                <div class="mt-4 text-center">
+                    <button id="extract-frame" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                        提取当前帧
+                    </button>
+                </div>
+            </div>
+            
+            <div id="image-container" class="hidden">
+                <h3 class="font-bold mb-2">提取的帧：</h3>
+                <img id="extracted-image" class="w-full h-64 object-cover rounded-lg">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const videoContainer = document.getElementById('video-container');
+        const imageContainer = document.getElementById('image-container');
+        const videoPreview = document.getElementById('video-preview');
+        const extractedImage = document.getElementById('extracted-image');
+        const extractFrameBtn = document.getElementById('extract-frame');
+
+        fileInput.addEventListener('change', handleFile);
+
+        function handleFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            console.log('文件信息:', {
+                name: file.name,
+                type: file.type,
+                size: file.size
+            });
+
+            // 显示文件信息
+            document.getElementById('file-name').textContent = `文件名: ${file.name}`;
+            document.getElementById('file-type').textContent = `文件类型: ${file.type}`;
+            document.getElementById('file-size').textContent = `文件大小: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+            fileInfo.classList.remove('hidden');
+
+            // 检查文件类型
+            const isImage = file.type.startsWith('image/');
+            const isVideo = file.type.startsWith('video/');
+            const isMP4 = file.name.toLowerCase().endsWith('.mp4') || file.type === 'video/mp4';
+
+            if (isImage) {
+                // 显示图像
+                imageContainer.classList.remove('hidden');
+                videoContainer.classList.add('hidden');
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    extractedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else if (isVideo || isMP4) {
+                // 显示视频
+                videoContainer.classList.remove('hidden');
+                imageContainer.classList.add('hidden');
+                videoPreview.src = URL.createObjectURL(file);
+                
+                // 设置帧提取功能
+                extractFrameBtn.onclick = function() {
+                    extractVideoFrame(videoPreview);
+                };
+            } else {
+                alert('不支持的文件格式');
+            }
+        }
+
+        function extractVideoFrame(video) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob(function(blob) {
+                if (blob) {
+                    const imageUrl = URL.createObjectURL(blob);
+                    extractedImage.src = imageUrl;
+                    imageContainer.classList.remove('hidden');
+                    console.log('帧提取成功');
+                } else {
+                    alert('帧提取失败');
+                }
+            }, 'image/jpeg', 0.8);
+        }
+    </script>
+</body>
+</html>

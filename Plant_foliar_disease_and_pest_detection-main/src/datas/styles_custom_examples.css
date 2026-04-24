@@ -1,0 +1,157 @@
+/* 病虫害识别系统 - 自定义样式修改示例 */
+
+/* 1. 修改颜色主题 */
+:root {
+    /* 原始颜色 */
+    --primary-color: #FF8C00;
+    --secondary-color: #FF6347;
+    --accent-color: #FF4500;
+    
+    /* 可以改为其他颜色，比如： */
+    /* --primary-color: #2E8B57;   绿色主题 */
+    /* --primary-color: #4169E1;   蓝色主题 */
+    /* --primary-color: #8B008B;   紫色主题 */
+}
+
+/* 2. 修改背景渐变 */
+body {
+    /* 原始背景 */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    
+    /* 可以改为其他背景，比如： */
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    /* background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); */
+    /* background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); */
+}
+
+/* 3. 修改卡片样式 */
+.card {
+    /* 原始样式 */
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    
+    /* 可以改为其他样式，比如： */
+    /* border-radius: 25px; */
+    /* box-shadow: 0 15px 35px rgba(0,0,0,0.2); */
+    /* border: 2px solid var(--primary-color); */
+}
+
+/* 4. 修改按钮样式 */
+.btn-primary {
+    /* 原始样式 */
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border-radius: 25px;
+    
+    /* 可以改为其他样式，比如： */
+    /* background: var(--primary-color); */
+    /* border-radius: 10px; */
+    /* box-shadow: 0 4px 15px rgba(0,0,0,0.2); */
+}
+
+/* 5. 修改导航栏样式 */
+.navbar {
+    /* 原始样式 */
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    
+    /* 可以改为其他样式，比如： */
+    /* background: var(--primary-color); */
+    /* background: linear-gradient(45deg, #667eea, #764ba2); */
+}
+
+/* 6. 添加自定义动画 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* 7. 修改上传区域样式 */
+.upload-area {
+    /* 原始样式 */
+    border: 3px dashed var(--primary-color);
+    background-color: rgba(255, 140, 0, 0.05);
+    
+    /* 可以改为其他样式，比如： */
+    /* border: 2px solid var(--primary-color); */
+    /* background-color: rgba(255, 140, 0, 0.1); */
+    /* border-radius: 20px; */
+}
+
+/* 8. 修改预测结果样式 */
+.prediction-result {
+    /* 原始样式 */
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    
+    /* 可以改为其他样式，比如： */
+    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    /* background: var(--primary-color); */
+    /* color: white; */
+}
+
+/* 9. 修改指标卡片样式 */
+.metric-card {
+    /* 原始样式 */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    
+    /* 可以改为其他样式，比如： */
+    /* background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); */
+    /* background: var(--primary-color); */
+}
+
+/* 10. 添加暗色主题 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #FFD700;
+        --secondary-color: #FFA500;
+        --accent-color: #FF8C00;
+    }
+    
+    body {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+    }
+    
+    .card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+}
+
+/* 11. 添加移动端优化 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .upload-area {
+        padding: 20px;
+    }
+    
+    .metric-card {
+        padding: 20px;
+    }
+}
+
+/* 12. 添加打印样式 */
+@media print {
+    .navbar,
+    .footer,
+    .btn {
+        display: none;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+

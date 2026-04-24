@@ -1,0 +1,522 @@
+/* 绿色防控设备控制模块样式 */
+
+.green-control-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 30px;
+    min-height: 600px;
+}
+
+/* 左侧设备分布图 */
+.device-map-section {
+    background: var(--pure-white);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+.map-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-gray);
+    background: var(--off-white);
+}
+
+.map-header h3 {
+    color: var(--primary-green);
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.map-legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.legend-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.legend-icon.online {
+    background: var(--success-color);
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.legend-icon.offline {
+    background: var(--text-gray);
+}
+
+.legend-icon.error {
+    background: var(--error-color);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+.field-map {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(135deg, #E8F5E8, #F1F8E9);
+    overflow: hidden;
+    padding: 0;
+}
+
+.field-boundaries-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/* 设备图标 */
+.device-icon {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--pure-white);
+    box-shadow: var(--shadow-medium);
+    font-size: 16px;
+    color: var(--pure-white);
+    z-index: 100;
+}
+
+.device-icon:hover {
+    transform: scale(1.2);
+    z-index: 10;
+}
+
+.device-icon.online {
+    background: var(--success-color);
+    animation: pulse 2s infinite;
+}
+
+.device-icon.offline {
+    background: var(--text-gray);
+}
+
+.device-icon.error {
+    background: var(--error-color);
+    animation: blink 1s infinite;
+}
+
+/* 设备位置 */
+.device-icon.kill-light-1 { top: 20%; left: 20%; }
+.device-icon.kill-light-2 { top: 25%; right: 25%; }
+.device-icon.kill-light-3 { bottom: 30%; left: 30%; }
+.device-icon.kill-light-4 { bottom: 25%; right: 20%; }
+
+.device-icon.trap-1 { top: 15%; left: 50%; }
+.device-icon.trap-2 { top: 60%; left: 15%; }
+.device-icon.trap-3 { top: 60%; right: 15%; }
+
+.device-icon.enemy-1 { top: 40%; left: 40%; }
+.device-icon.enemy-2 { top: 40%; right: 40%; }
+
+/* 设备信息气泡 */
+.device-tooltip {
+    position: absolute;
+    background: var(--pure-white);
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-heavy);
+    padding: 15px;
+    z-index: 1000;
+    min-width: 200px;
+    border: 1px solid var(--border-gray);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.device-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.device-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--pure-white);
+}
+
+/* 工具提示显示在下方时的箭头 */
+.device-tooltip.tooltip-below::before {
+    bottom: auto;
+    top: -8px;
+    border-top: none;
+    border-bottom: 8px solid var(--pure-white);
+}
+
+.device-tooltip h4 {
+    color: var(--primary-green);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.device-tooltip p {
+    color: var(--text-gray);
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+/* 右侧控制面板 */
+.control-panel-section {
+    background: var(--pure-white);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+.control-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-gray);
+    background: var(--off-white);
+}
+
+.panel-header h3 {
+    color: var(--primary-green);
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.area-selector select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-medium);
+    background: var(--pure-white);
+    color: var(--dark-gray);
+    font-size: 14px;
+}
+
+.area-selector select:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+/* 设备列表 */
+.device-list {
+    flex: 1;
+    padding: 20px 25px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+}
+
+.device-card {
+    background: var(--off-white);
+    border-radius: var(--radius-medium);
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--primary-green);
+    transition: all 0.3s ease;
+}
+
+.device-card:hover {
+    background: var(--background-green);
+    transform: translateX(5px);
+}
+
+.device-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.device-icon-small {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pure-white);
+    font-size: 16px;
+}
+
+.device-icon-small.online {
+    background: var(--success-color);
+}
+
+.device-icon-small.offline {
+    background: var(--text-gray);
+}
+
+.device-icon-small.error {
+    background: var(--error-color);
+}
+
+.device-details h4 {
+    color: var(--primary-green);
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.device-details p {
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.device-status {
+    padding: 4px 12px;
+    border-radius: var(--radius-small);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.device-status.running {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+}
+
+.device-status.stopped {
+    background: rgba(158, 158, 158, 0.1);
+    color: var(--text-gray);
+}
+
+.device-status.error {
+    background: rgba(244, 67, 54, 0.1);
+    color: var(--error-color);
+}
+
+.device-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.device-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--radius-small);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 60px;
+}
+
+.device-btn.start {
+    background: var(--success-color);
+    color: var(--pure-white);
+}
+
+.device-btn.start:hover {
+    background: #388E3C;
+}
+
+.device-btn.stop {
+    background: var(--error-color);
+    color: var(--pure-white);
+}
+
+.device-btn.stop:hover {
+    background: #D32F2F;
+}
+
+.device-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 批量控制 */
+.bulk-control {
+    padding: 20px 25px;
+    border-top: 1px solid var(--border-gray);
+    background: var(--off-white);
+    display: flex;
+    gap: 15px;
+}
+
+.bulk-btn {
+    flex: 1;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* 设备详情模态框 */
+.device-detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.device-detail-info {
+    background: var(--off-white);
+    padding: 20px;
+    border-radius: var(--radius-medium);
+}
+
+.device-detail-info h4 {
+    color: var(--primary-green);
+    margin-bottom: 15px;
+}
+
+.device-detail-info p {
+    margin-bottom: 10px;
+    color: var(--text-gray);
+}
+
+.device-detail-stats {
+    background: var(--background-green);
+    padding: 20px;
+    border-radius: var(--radius-medium);
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.stat-label {
+    color: var(--text-gray);
+}
+
+.stat-value {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .green-control-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+        min-height: auto;
+    }
+    
+    .device-map-section,
+    .control-panel-section {
+        height: 400px;
+    }
+    
+    .field-map {
+        padding: 15px;
+    }
+    
+    .device-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .map-legend {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .device-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .device-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .bulk-control {
+        flex-direction: column;
+    }
+    
+    .device-detail-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .field-map {
+        padding: 10px;
+    }
+    
+    .device-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    
+    .device-card {
+        padding: 15px;
+    }
+    
+    .device-tooltip {
+        min-width: 150px;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能防控</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/chemical-control.css">
+    <link rel="stylesheet" href="css/green-control.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/additional-styles.css">
+    <link rel="stylesheet" href="css/ai-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Tailwind CSS for navigation -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for navigation icons -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    </noscript>
+
+    <style>
+        /* 导航链接高亮效果 */
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link-active {
+            color: #4CAF50 !important;
+        }
+
+        .nav-link-active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            border-radius: 1px;
+            animation: slideInFromLeft 0.5s ease;
+        }
+
+        @keyframes slideInFromLeft {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center items-center py-5">
+                <!-- 桌面端导航 - 居中 -->
+                <nav class="hidden md:flex space-x-14">
+                    <a href="../index.html#hero"
+                        class="nav-link text-dark hover:text-tertiary transition-colors text-[1.3rem] font-semibold">首页</a>
+                    <a href="../zhishikepu/index.html"
+                        class="nav-link text-dark hover:text-tertiary transition-colors text-[1.3rem] font-semibold">虫病科普</a>
+                    <a href="../Plant_foliar_disease_and_pest_detection-main/src/datas/index.html"
+                        class="nav-link text-dark hover:text-tertiary transition-colors text-[1.3rem] font-semibold">病虫害识别</a>
+                    <a href="../prediction/enpre.html"
+                        class="nav-link text-dark hover:text-tertiary transition-colors text-[1.3rem] font-semibold">风险预测</a>
+                    <a href="index.html"
+                        class="nav-link text-dark hover:text-tertiary transition-colors text-[1.3rem] font-semibold nav-link-active">智能防控</a>
+                    <a href="../farm/index.html"
+                        class="nav-link text-dark hover:text-tertiary transition-colors text-[1.3rem] font-semibold">数据管理</a>
+                </nav>
+
+                <!-- 移动端菜单按钮 -->
+                <button id="menu-toggle" class="md:hidden text-dark text-xl">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-3">
+                <nav class="flex flex-col space-y-3">
+                    <a href="../index.html#hero"
+                        class="text-dark hover:text-tertiary py-2 transition-colors text-[1.2rem] font-semibold">首页</a>
+                    <a href="../zhishikepu/index.html"
+                        class="text-dark hover:text-tertiary py-2 transition-colors text-[1.2rem] font-semibold">虫病科普</a>
+                    <a href="../Plant_foliar_disease_and_pest_detection-main/src/datas/index.html"
+                        class="text-dark hover:text-tertiary py-2 transition-colors text-[1.2rem] font-semibold">病虫害识别</a>
+                    <a href="../prediction/enpre.html"
+                        class="text-dark hover:text-tertiary py-2 transition-colors text-[1.2rem] font-semibold">风险预测</a>
+                    <a href="index.html"
+                        class="text-dark hover:text-tertiary py-2 transition-colors text-[1.2rem] font-semibold text-tertiary">智能防控</a>
+                    <a href="../farm/index.html"
+                        class="text-dark hover:text-tertiary py-2 transition-colors text-[1.2rem] font-semibold">数据管理</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container" style="padding-top: 80px;">
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 化学精准施药模块 -->
+            <section id="chemical-control" class="control-module active">
+                <div class="module-header">
+                    <h1><i class="fas fa-prescription-bottle-alt"></i> 化学精准施药方案生成</h1>
+                    <p>一键生成专业防治处方，科学用药精准防控</p>
+                </div>
+
+                <!-- 田块选择器 -->
+                <div class="field-selector-section">
+                    <div class="selector-header"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3><i class="fas fa-map-marked-alt"></i> 选择田块</h3>
+                    </div>
+                    <div class="field-grid" id="field-grid">
+                        <!-- 田块列表将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 诊断结果看板 -->
+                <div class="diagnosis-board">
+                    <div class="image-section">
+                        <div class="image-container">
+                            <img id="disease-image" src="assets/placeholder-image.jpg" alt="相关图片">
+                            <div class="image-overlay">
+                                <div class="symptom-markers"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-card" id="info-card">
+                            <div class="disease-type">
+                                <h2 id="disease-name">请选择田块查看方案</h2>
+                                <span class="disease-subtype" id="disease-subtype"></span>
+                            </div>
+
+                            <div class="severity-indicator">
+                                <label>发生程度</label>
+                                <div class="severity-bar">
+                                    <div class="severity-progress" id="severity-progress"></div>
+                                    <span class="severity-text" id="severity-text">未选择</span>
+                                </div>
+                            </div>
+
+                            <div class="affected-area">
+                                <label>影响范围</label>
+                                <div class="area-info">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span id="area-text">待选择</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 施药方案处方单 -->
+                <div class="prescription-section">
+                    <div class="prescription-header">
+                        <h2><i class="fas fa-file-medical"></i> 推荐防治方案</h2>
+                    </div>
+
+                    <!-- AI推荐区域 -->
+                    <div class="ai-recommendations-section" id="ai-recommendations-section" style="display: none;">
+                        <div class="ai-section-header">
+                            <h3><i class="fas fa-robot"></i> AI智能推荐方案</h3>
+                            <div class="ai-status" id="ai-status">
+                                <span class="status-indicator"></span>
+                                <span class="status-text">分析中...</span>
+                            </div>
+                        </div>
+                        <div class="ai-recommendations" id="ai-recommendations">
+                            <!-- AI推荐方案卡片将通过JavaScript动态生成 -->
+                        </div>
+                    </div>
+
+                    <div class="prescription-content" id="prescription-content">
+                        <div class="prescription-grid">
+                            <div class="prescription-item">
+                                <div class="prescription-item-header">
+                                    <div class="item-icon">
+                                        <i class="fas fa-prescription-bottle-alt"></i>
+                                    </div>
+                                    <h3>药剂选择</h3>
+                                </div>
+                                <div class="item-content">
+                                    <div class="medicine-list" id="medicine-list">
+                                        <p class="placeholder">请先选择田块查看方案</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prescription-item">
+                                <div class="prescription-item-header">
+                                    <div class="item-icon">
+                                        <i class="fas fa-tint"></i>
+                                    </div>
+                                    <h3>用量与方法</h3>
+                                </div>
+                                <div class="item-content">
+                                    <div class="usage-info" id="usage-info">
+                                        <p class="placeholder">请先选择田块查看方案</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prescription-item">
+                                <div class="prescription-item-header">
+                                    <div class="item-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <h3>关键提醒</h3>
+                                </div>
+                                <div class="item-content">
+                                    <div class="warnings" id="warnings">
+                                        <p class="placeholder">请先选择田块查看方案</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 绿色防控设备控制模块 -->
+            <section id="green-control" class="control-module">
+                <div class="module-header">
+                    <h1><i class="fas fa-leaf"></i> 绿色防控设备一键启停</h1>
+                    <p>一图控设备，智能绿色防控管理</p>
+                </div>
+
+                <div class="green-control-layout">
+                    <!-- 左侧设备分布图 -->
+                    <div class="device-map-section">
+                        <div class="map-container">
+                            <div class="map-header">
+                                <h3><i class="fas fa-map"></i> 地块设备分布图</h3>
+                                <div class="map-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-icon online"></div>
+                                        <span>运行中</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-icon offline"></div>
+                                        <span>已关闭</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-icon error"></div>
+                                        <span>故障</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field-map" id="field-map">
+                                <!-- SVG田块分布图 -->
+                                <svg id="field-boundaries-svg" class="field-boundaries-svg" viewBox="0 0 100 100"
+                                    preserveAspectRatio="none">
+                                    <!-- 田块多边形将在这里动态生成 -->
+                                </svg>
+                                <!-- 设备图标将通过JavaScript动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧设备控制面板 -->
+                    <div class="control-panel-section">
+                        <div class="control-panel">
+                            <div class="panel-header">
+                                <h3><i class="fas fa-sliders-h"></i> 设备控制面板</h3>
+                                <div class="area-selector">
+                                    <select id="area-selector">
+                                        <option value="all">全部区域</option>
+                                        <!-- 区域选项由js根据prediction的田块region|area自动渲染 -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- AI智能控制模式 -->
+                            <div class="intelligent-control-panel">
+                                <div class="control-switch">
+                                    <label class="switch-label">
+                                        <input type="checkbox" id="intelligent-mode" />
+                                        <span class="switch-text">
+                                            <i class="fas fa-robot"></i> AI智能控制模式
+                                        </span>
+                                    </label>
+                                    <div class="ai-status" id="ai-status">
+                                        <span class="status-indicator"></span>
+                                        <span class="status-text">待机中</span>
+                                    </div>
+                                </div>
+                                <div class="ai-optimization" id="ai-optimization" style="display: none;">
+                                    <!-- AI优化建议将通过JavaScript动态生成 -->
+                                </div>
+                            </div>
+
+                            <div class="device-list" id="device-list">
+                                <!-- 设备列表将通过JavaScript动态生成 -->
+                            </div>
+
+                            <div class="bulk-control">
+                                <button class="btn btn-success bulk-btn" id="bulk-start">
+                                    <i class="fas fa-play"></i> 分区一键启动
+                                </button>
+                                <button class="btn btn-danger bulk-btn" id="bulk-stop">
+                                    <i class="fas fa-stop"></i> 分区一键停止
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- 滚动指示器 -->
+    <div class="scroll-indicator">
+        <div class="scroll-dot active" data-label="精准施药" data-section="chemical"></div>
+        <div class="scroll-dot" data-label="绿色防控" data-section="green"></div>
+    </div>
+
+    <!-- 备选方案弹窗 -->
+    <div class="modal" id="alternatives-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>备选防治方案</h3>
+                <button class="close-btn" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="alternatives-content">
+                <!-- 备选方案内容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 设备详情弹窗 -->
+    <div class="modal" id="device-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="device-modal-title">设备详情</h3>
+                <button class="close-btn" id="close-device-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="device-modal-content">
+                <!-- 设备详情内容 -->
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../prediction/data/field-data.js"></script>
+    <!-- 引入prediction系统的API客户端（用于获取预测数据） -->
+    <script src="../prediction/js/api-client.js"></script>
+    <!-- AI相关脚本 -->
+    <script src="js/ai-data-service.js"></script>
+    <script src="js/ai-prescription-engine.js"></script>
+    <script src="js/ai-device-controller.js"></script>
+    <!-- 原有脚本 -->
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/chemical-control.js"></script>
+    <script src="js/green-control.js"></script>
+
+    <!-- 导航栏移动端菜单功能 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // 关闭移动端菜单（点击菜单项后）
+                document.querySelectorAll('#mobile-menu a').forEach(link => {
+                    link.addEventListener('click', function () {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
+    <!-- 直接加载JavaScript库 -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/wowjs@1.2.2/dist/wow.min.js"></script>
+
+    <!-- 敲敲云AI SDK -->
+    <script src="https://app.qiaoqiaoyun.com/chat/chat.js" id="e7e007dd52f67fe36365eff636bbffbd"></script>
+
+    <!-- AI助手自定义样式（仅覆盖样式，不改变功能） -->
+    <link rel="stylesheet" href="ai-assistant.css">
+
+    <!-- 初始化敲敲云AI（使用SDK原生功能） -->
+    <script>
+        createAiChat({
+            appId: "1971426275889324033",
+            // 支持top-left左上, top-right右上, bottom-left左下, bottom-right右下
+            iconPosition: "bottom-right"
+        });
+    </script>
+</body>
+
+</html>

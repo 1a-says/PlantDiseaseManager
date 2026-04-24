@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频支持调试测试</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">视频支持调试测试</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-lg font-bold mb-4">文件上传测试</h2>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <input type="file" id="file-input" accept="image/*,video/*,.mp4" class="hidden">
+                <button onclick="document.getElementById('file-input').click()" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    选择文件（支持图像和视频）
+                </button>
+            </div>
+            
+            <div id="result" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                <h3 class="font-bold mb-2">处理结果：</h3>
+                <p id="result-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            console.log('文件信息:', {
+                name: file.name,
+                type: file.type,
+                size: file.size
+            });
+
+            // 使用与主页面相同的逻辑
+            const isImage = file.type.startsWith('image/');
+            const isVideo = file.type.startsWith('video/');
+            const isMP4 = file.name.toLowerCase().endsWith('.mp4') || file.type === 'video/mp4';
+            
+            const resultDiv = document.getElementById('result');
+            const resultText = document.getElementById('result-text');
+            
+            if (!isImage && !isVideo && !isMP4) {
+                resultText.textContent = '❌ 请选择图像或视频文件（支持 JPG, PNG, JPEG, MP4, AVI, MOV 格式）';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+            
+            if (isImage) {
+                resultText.textContent = '✅ 图像文件已识别，类型: ' + file.type;
+            } else if (isVideo || isMP4) {
+                resultText.textContent = '✅ 视频文件已识别，类型: ' + file.type;
+            }
+            
+            resultDiv.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

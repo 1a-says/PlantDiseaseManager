@@ -1,0 +1,555 @@
+/* 化学精准施药模块样式 */
+
+/* 田块选择器 */
+.field-selector-section {
+    background: rgba(255, 255, 255, 0.7);
+    /* 增大透明度，让背景图更清晰 */
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 30px;
+    padding: 30px;
+}
+
+.selector-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-green);
+}
+
+.selector-header h3 {
+    color: var(--primary-green);
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.field-grid {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.field-card {
+    background: var(--off-white);
+    border: 2px solid var(--border-gray);
+    border-radius: var(--radius-medium);
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 60px;
+}
+
+.field-card:hover {
+    background: var(--background-green);
+    border-color: var(--primary-green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.field-card.selected {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    box-shadow: var(--shadow-medium);
+}
+
+.field-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-green);
+    display: block;
+}
+
+.field-card.selected .field-name {
+    color: var(--pure-white);
+}
+
+/* 诊断结果看板 */
+.diagnosis-board {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    /* 增大透明度，让背景图更清晰 */
+    border-radius: var(--radius-medium);
+}
+
+.image-section {
+    position: relative;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 50%;
+    /* 缩小图片区域 */
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    background: var(--light-gray);
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.symptom-markers {
+    display: none;
+    /* 隐藏红圈标记 */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--error-color);
+    border-radius: 50%;
+    background: rgba(244, 67, 54, 0.1);
+    animation: pulse 2s infinite;
+}
+
+
+/* 信息卡片 */
+.info-section {
+    display: flex;
+    align-items: center;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.7);
+    /* 增大透明度，让背景图更清晰 */
+    border-radius: var(--radius-small);
+    box-shadow: var(--shadow-light);
+    padding: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.disease-type {
+    margin-bottom: 12px;
+}
+
+.disease-type h2 {
+    font-size: 28px;
+    color: var(--primary-green);
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.disease-subtype {
+    font-size: 16px;
+    color: var(--text-gray);
+    background: var(--background-green);
+    padding: 5px 12px;
+    border-radius: var(--radius-small);
+}
+
+.severity-indicator {
+    margin-bottom: 12px;
+}
+
+.severity-indicator label {
+    display: block;
+    font-weight: 500;
+    color: var(--dark-gray);
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.severity-bar {
+    position: relative;
+    height: 8px;
+    background: var(--light-gray);
+    border-radius: var(--radius-small);
+    overflow: hidden !important;
+    width: 100%;
+    box-sizing: border-box;
+    isolation: isolate;
+}
+
+.severity-bar::after {
+    display: none !important;
+}
+
+.severity-progress {
+    height: 100%;
+    border-radius: var(--radius-small);
+    transition: all 0.5s ease;
+    position: relative;
+    max-width: 100% !important;
+    box-sizing: border-box;
+    overflow: hidden !important;
+    width: auto;
+    clip-path: inset(0 0 0 0);
+}
+
+.severity-progress[style] {
+    max-width: 100% !important;
+}
+
+.severity-progress::before {
+    display: none;
+}
+
+.severity-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.severity-text {
+    position: absolute;
+    top: -25px;
+    right: 0;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: var(--radius-small);
+    color: var(--pure-white);
+}
+
+/* 严重程度颜色 */
+.severity-mild .severity-progress {
+    background: var(--success-color);
+    width: 30%;
+}
+
+.severity-mild .severity-text {
+    background: var(--success-color);
+}
+
+.severity-moderate .severity-progress {
+    background: var(--warning-color);
+    width: 60%;
+}
+
+.severity-moderate .severity-text {
+    background: var(--warning-color);
+}
+
+.severity-severe .severity-progress {
+    background: var(--error-color);
+    width: 90%;
+}
+
+.severity-severe .severity-text {
+    background: var(--error-color);
+}
+
+.affected-area label {
+    display: block;
+    font-weight: 500;
+    color: var(--dark-gray);
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.affected-area {
+    margin-top: 12px;
+}
+
+.area-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-gray);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.area-info i {
+    color: var(--primary-green);
+}
+
+/* 施药方案处方单 */
+.prescription-section {
+    background: rgba(255, 255, 255, 0.7);
+    /* 增大透明度，让背景图更清晰 */
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    margin: 0 30px 30px 30px;
+}
+
+.prescription-header {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.7), rgba(76, 175, 80, 0.7));
+    /* 增大透明度，让背景图更清晰 */
+    color: var(--pure-white);
+    padding: 25px 30px;
+    text-align: center;
+}
+
+.prescription-header h2 {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.prescription-content {
+    padding: 30px;
+}
+
+.prescription-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 固定三列，确保等宽 */
+    gap: 25px;
+    margin-bottom: 30px;
+    align-items: stretch;
+    /* 让所有项目等高 */
+}
+
+.prescription-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    /* 增大透明度，让背景图更清晰 */
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--border-gray);
+    border-top: 4px solid var(--primary-green);
+    transition: all 0.3s ease;
+    min-height: 400px;
+    /* 统一最小高度，让三个板块等高 */
+    height: 100%;
+    /* 确保高度一致 */
+}
+
+.prescription-item:hover {
+    background: var(--background-green);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-light);
+}
+
+/* 图标和标题容器 - 同一行居中 */
+.prescription-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.item-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pure-white);
+    font-size: 18px;
+}
+
+.item-content {
+    width: 100%;
+    flex: 1;
+    /* 让内容区域自动填充剩余空间 */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    /* 允许flex子元素收缩 */
+}
+
+.item-content h3 {
+    color: var(--primary-green);
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.medicine-list,
+.usage-info,
+.warnings {
+    color: var(--dark-gray);
+    line-height: 1.8;
+    flex: 1;
+    /* 内容区域自动填充 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* 内容从顶部开始 */
+    min-height: 200px;
+    /* 统一最小内容高度 */
+}
+
+.medicine-item {
+    background: var(--pure-white);
+    padding: 15px;
+    border-radius: var(--radius-small);
+    margin-bottom: 10px;
+    border: 1px solid var(--border-gray);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.medicine-name {
+    font-weight: 600;
+    color: var(--primary-green);
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
+}
+
+.medicine-advantage {
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.usage-step {
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    padding-left: 30px;
+    position: relative;
+    background: var(--off-white);
+    border-radius: var(--radius-small);
+    border-left: 3px solid var(--primary-green);
+}
+
+.usage-step::before {
+    content: '✓';
+    position: absolute;
+    left: 10px;
+    color: var(--primary-green);
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.warning-item {
+    background: var(--background-green);
+    border-left: 3px solid var(--primary-green);
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: var(--radius-small);
+    font-size: 18px;
+    color: var(--dark-gray);
+}
+
+.warning-item i {
+    color: var(--primary-green);
+    margin-right: 8px;
+}
+
+.placeholder {
+    color: var(--text-gray);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .field-grid {
+        gap: 10px;
+    }
+
+    .field-card {
+        padding: 10px 18px;
+    }
+
+    .field-name {
+        font-size: 14px;
+    }
+
+    .diagnosis-board {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .image-container {
+        padding-bottom: 60%;
+        /* 移动端也使用较小的比例 */
+    }
+
+    .prescription-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .prescription-item {
+        flex-direction: column;
+        text-align: center;
+        min-height: auto;
+        /* 移动端取消最小高度限制 */
+    }
+
+    .prescription-item-header {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-card {
+        padding: 20px;
+    }
+
+    .disease-type h2 {
+        font-size: 24px;
+    }
+
+    .prescription-content {
+        padding: 20px;
+    }
+
+    .prescription-header {
+        padding: 20px;
+    }
+
+    .prescription-header h2 {
+        font-size: 20px;
+    }
+}

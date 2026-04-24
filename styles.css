@@ -1,0 +1,1832 @@
+/* AI智慧农产品识别管理平台 - 样式文件 */
+
+/* 基础样式重置和全局设置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #F8FAFC;
+  color: #1E293B;
+  scroll-behavior: smooth;
+}
+
+/* 自定义工具类 */
+.content-auto {
+  content-visibility: auto;
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* 字体显示优化 */
+.font-inter {
+  font-display: swap;
+}
+
+/* 导航栏样式 */
+.navbar {
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background-color: white;
+  box-shadow: none !important;
+}
+
+/* 导航栏移除所有边框和阴影 */
+#navbar {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 确保导航栏内部所有元素也没有边框 */
+#navbar * {
+  border-bottom: none !important;
+}
+
+/* 移除导航栏容器可能产生的任何线条 */
+#navbar .container,
+#navbar .container>* {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* 英雄区样式 */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* 功能卡片样式 */
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  height: 192px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图表容器样式 */
+.chart-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+}
+
+.chart-wrapper {
+  height: 320px;
+}
+
+/* 案例卡片样式 */
+.case-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.case-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.case-image {
+  width: 100%;
+  height: 224px;
+  object-fit: cover;
+}
+
+.case-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+/* 统计卡片样式 */
+.stat-card {
+  background-color: #F8FAFC;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+/* 识别案例样式 */
+.recognition-case {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #F8FAFC;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.recognition-image {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 16px;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #E5E7EB;
+  border-radius: 9999px;
+  height: 8px;
+}
+
+.progress-fill {
+  height: 8px;
+  border-radius: 9999px;
+}
+
+.risk-badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.risk-high {
+  background-color: #FEE2E2;
+  color: #DC2626;
+}
+
+.risk-medium {
+  background-color: #FEF3C7;
+  color: #D97706;
+}
+
+.risk-low {
+  background-color: #D1FAE5;
+  color: #059669;
+}
+
+.risk-very-low {
+  background-color: #DBEAFE;
+  color: #2563EB;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: rgba(76, 175, 80, 0.9);
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 返回顶部按钮 */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background-color: #4CAF50;
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 50;
+  cursor: pointer;
+  border: none;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 移动端菜单样式 */
+.mobile-menu {
+  background: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 100%;
+  z-index: 40;
+}
+
+.mobile-menu.hidden {
+  display: none;
+}
+
+/* 波浪分隔符 */
+.wave-separator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  /* 提高z-index确保显示在最上层 */
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+}
+
+.wave-separator svg {
+  width: 100%;
+  height: auto;
+  fill: #F8FAFC;
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .chart-wrapper {
+    height: 250px;
+  }
+}
+
+/* 图片加载优化 */
+img {
+  transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"] {
+  opacity: 0;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* 加载状态 */
+.loading-placeholder {
+  background-color: #E5E7EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6B7280;
+}
+
+.loading-placeholder i {
+  font-size: 2rem;
+}
+
+/* 轮播图样式 */
+.pxl-slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: visible;
+  /* 允许波浪边显示 */
+}
+
+.slider-layout1 {
+  position: relative;
+}
+
+/* Swiper容器 */
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  --pxl-duration: 7000ms;
+  --pxl-transition-duration: 300ms;
+}
+
+.swiper-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* 幻灯片样式 */
+.swiper-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+/* 幻灯片内容容器 */
+.slide-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.slide-inner {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+/* 标题区域 */
+.slide-heading {
+  margin-bottom: 40px;
+}
+
+.heading-subtitle {
+  margin-bottom: 20px;
+}
+
+.subtitle-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pxl-svg-highlight {
+  width: 32px;
+  height: 32px;
+  color: #63AB52;
+}
+
+.heading-title {
+  margin-bottom: 30px;
+}
+
+.title-text {
+  font-size: 5rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.pxl-text-highlight {
+  color: #63AB52;
+  position: relative;
+}
+
+.pxl-text-highlight.large-text {
+  font-size: 2em;
+  font-weight: 900;
+  color: white;
+}
+
+/* 按钮组 */
+.slide-button-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 按钮样式 */
+.pxl-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.slide-button-first {
+  background-color: #EDDD5E;
+  color: #0A2803;
+  border-color: #EDDD5E;
+}
+
+.slide-button-first:hover {
+  background-color: transparent;
+  color: #EDDD5E;
+  border-color: #EDDD5E;
+  transform: translateY(-2px);
+}
+
+.slide-button-second {
+  background-color: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.slide-button-second:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.pxl-button-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pxl-button-icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+}
+
+.pxl-button:hover .pxl-button-icon {
+  transform: translateX(2px);
+}
+
+/* WOW动画 */
+.wow {
+  visibility: hidden;
+}
+
+.wow.animated {
+  visibility: visible;
+}
+
+/* 响应式设计 */
+@media (max-width: 1199px) {
+  .title-text {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .title-text {
+    font-size: 2.5rem;
+  }
+
+  .subtitle-text {
+    font-size: 16px;
+  }
+
+  .slide-container {
+    padding: 40px 20px;
+  }
+
+  .slide-button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pxl-button {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .pxl-slider {
+    height: 100vh;
+    min-height: 500px;
+  }
+
+  .title-text {
+    font-size: 2rem;
+  }
+
+  .subtitle-text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  .title-text {
+    font-size: 1.8rem;
+  }
+
+  .slide-container {
+    padding: 30px 15px;
+  }
+
+  .pxl-button {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+}
+
+/* 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #000;
+  overflow-x: hidden;
+}
+
+/* 预加载遮罩 */
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loading-spinner {
+  text-align: center;
+  color: white;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #63AB52;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 主要内容容器 */
+.elementor-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.elementor-40 {
+  width: 100%;
+}
+
+/* 轮播图容器 */
+.elementor-element-cb3010b {
+  --display: flex;
+  --flex-direction: column;
+  --container-widget-width: 100%;
+  --container-widget-height: initial;
+  --container-widget-flex-grow: 0;
+  --container-widget-align-self: initial;
+  --flex-wrap-mobile: wrap;
+  --margin-top: 0px;
+  --margin-bottom: 120px;
+  --margin-left: 0px;
+  --margin-right: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-left: 38px;
+  --padding-right: 38px;
+  /* 注意：mask 只在分隔符元素上应用，不在容器上 */
+}
+
+.e-con-inner {
+  width: 100%;
+}
+
+/* 轮播图样式 */
+.pxl-slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  border-radius: 0px 0px 33px 33px;
+  /* 注意：mask 只在分隔符上应用，不在轮播图容器上 */
+}
+
+.slider-layout1 {
+  position: relative;
+}
+
+/* Swiper容器 */
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  --pxl-duration: 7000ms;
+  --pxl-transition-duration: 300ms;
+}
+
+.swiper-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* 幻灯片样式 */
+.swiper-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 背景图片 - 修复闪烁问题 */
+.slide-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* 移除冲突的过渡和动画，防止闪烁 */
+  transition: none;
+  animation: none;
+  /* 硬件加速优化 */
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+
+
+/* 增强版背景放大动画 */
+@keyframes enhancedBackgroundZoomOut {
+  0% {
+    background-size: 100%;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+
+  100% {
+    background-size: 120%;
+    transform: scale(1.15);
+    filter: brightness(0.9);
+  }
+}
+
+
+
+/* 增强的视觉效果 */
+.slide-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg,
+      rgba(36, 79, 11, 0.1) 0%,
+      rgba(36, 79, 11, 0.05) 50%,
+      rgba(36, 79, 11, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.swiper-slide-active .slide-background::after {
+  opacity: 1;
+}
+
+/* 微妙的呼吸效果 */
+@keyframes subtleBreathing {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.005);
+  }
+}
+
+
+
+/* 第一张幻灯片背景 */
+.elementor-repeater-item-b153571 .slide-background {
+  background-color: #D3B4B4;
+  background-image: url('images/rice.jpg');
+}
+
+.elementor-repeater-item-b153571 .slide-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #244F0B7D;
+}
+
+/* 第二张幻灯片背景 */
+.elementor-repeater-item-f61da63 .slide-background {
+  background-color: #D3B4B4;
+  background-image: url('images/vietnam-3738879_1280.jpg');
+}
+
+.elementor-repeater-item-f61da63 .slide-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #244F0B7D;
+}
+
+/* 第三张幻灯片背景 */
+.elementor-repeater-item-86cc5c8 .slide-background {
+  background-color: #D3B4B4;
+  background-image: url('images/grass-3990230_1280.jpg');
+}
+
+.elementor-repeater-item-86cc5c8 .slide-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #244F0B7D;
+}
+
+/* 幻灯片内容容器 */
+.slide-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.slide-inner {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+/* 标题区域 */
+.slide-heading {
+  margin-bottom: 40px;
+}
+
+.heading-subtitle {
+  margin-bottom: 20px;
+}
+
+.subtitle-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pxl-svg-highlight {
+  width: 32px;
+  height: 32px;
+  color: #63AB52;
+}
+
+.heading-title {
+  margin-bottom: 30px;
+}
+
+.title-text {
+  font-size: 5rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.pxl-text-highlight {
+  color: #63AB52;
+  position: relative;
+}
+
+.pxl-text-highlight.large-text {
+  font-size: 2em;
+  font-weight: 900;
+  color: white;
+}
+
+/* 按钮组 */
+.slide-button-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 新增按钮组 */
+.additional-buttons-group {
+  display: flex !important;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+}
+
+/* 新增按钮样式 - 完全模仿"我们的服务"按钮 */
+.additional-button {
+  background-color: rgba(139, 139, 139, 0.3) !important;
+  /* 半透明灰绿色背景 */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  /* 淡白色边框 */
+  color: white !important;
+  backdrop-filter: blur(8px);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 24px;
+  min-width: 140px;
+  text-align: center;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 8px;
+  /* 圆角矩形，不是圆形 */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.additional-button:hover {
+  background-color: rgba(139, 139, 139, 0.5) !important;
+  /* 悬停时背景稍微加深 */
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  /* 悬停时边框稍微明显 */
+  transform: translateY(-1px);
+  /* 轻微上移 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* 悬停时阴影加深 */
+}
+
+.additional-button .pxl-button-text {
+  color: white !important;
+}
+
+.additional-button .pxl-button-icon {
+  color: white !important;
+}
+
+/* 确保按钮图标样式正确 */
+.additional-button .pxl-button-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.additional-button:hover .pxl-button-icon {
+  transform: translateX(2px);
+  /* 悬停时图标稍微右移 */
+}
+
+/* 按钮样式 */
+.pxl-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.slide-button-first {
+  background-color: #EDDD5E;
+  color: #0A2803;
+  border-color: #EDDD5E;
+}
+
+.slide-button-first:hover {
+  background-color: transparent;
+  color: #EDDD5E;
+  border-color: #EDDD5E;
+  transform: translateY(-2px);
+}
+
+.slide-button-second {
+  background-color: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.slide-button-second:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.pxl-button-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pxl-button-icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease;
+}
+
+.pxl-button:hover .pxl-button-icon {
+  transform: translateX(2px);
+}
+
+
+
+/* WOW动画 */
+.wow {
+  visibility: hidden;
+}
+
+.wow.animated {
+  visibility: visible;
+}
+
+/* 响应式设计 */
+@media (max-width: 1399px) {
+  .elementor-element-cb3010b {
+    --padding-left: 15px;
+    --padding-right: 15px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .title-text {
+    font-size: 3rem;
+  }
+
+}
+
+@media (max-width: 991px) {
+  .title-text {
+    font-size: 2.5rem;
+  }
+
+  .subtitle-text {
+    font-size: 16px;
+  }
+
+  .slide-container {
+    padding: 40px 20px;
+  }
+
+  .slide-button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pxl-button {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .pxl-slider {
+    height: 100vh;
+    min-height: 500px;
+  }
+
+  .title-text {
+    font-size: 2rem;
+  }
+
+  .subtitle-text {
+    font-size: 14px;
+  }
+
+
+}
+
+@media (max-width: 575px) {
+  .title-text {
+    font-size: 1.8rem;
+  }
+
+  .slide-container {
+    padding: 30px 15px;
+  }
+
+  .pxl-button {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 波纹效果 */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* 幻灯片编号 */
+.slide-number {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+/* 加载完成后的样式 */
+.loaded .loading-mask {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 确保轮播图在加载后可见 */
+.pxl-slider {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.pxl-slider.loaded {
+  opacity: 1;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .slide-container {
+    padding: 40px 20px;
+  }
+
+  .slide-inner {
+    max-width: 100%;
+  }
+
+  .slide-heading {
+    margin-bottom: 30px;
+  }
+
+  .subtitle-text {
+    font-size: 14px;
+  }
+
+  .title-text {
+    font-size: 3rem;
+    letter-spacing: -1px;
+  }
+
+  .slide-button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pxl-button {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+    font-size: 13px;
+    padding: 14px 28px;
+  }
+
+  .additional-buttons-group {
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .additional-button {
+    font-size: 12px;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .subtitle-text {
+    font-size: 12px;
+  }
+
+  .title-text {
+    font-size: 2.2rem;
+    letter-spacing: 0px;
+  }
+
+  .pxl-button {
+    font-size: 12px;
+    padding: 12px 24px;
+  }
+
+  .additional-buttons-group {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .additional-button {
+    font-size: 11px;
+    padding: 10px 16px;
+  }
+}
+
+/* 图片边缘淡化效果 */
+.image-soft-edge {
+  filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.2));
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.image-soft-edge:hover {
+  filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.3));
+  transform: scale(1.02);
+}
+
+/* 轮播图导航按钮样式 - 只保留白色箭头 */
+.pxl-swiper-button {
+  position: relative;
+  width: auto;
+  height: auto;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pxl-swiper-button:hover {
+  transform: scale(1.1);
+}
+
+.pxl-swiper-button svg {
+  width: 50px;
+  height: 50px;
+  color: white;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.pxl-swiper-button:hover svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* 导航按钮容器 */
+.swiper-navigation {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.swiper-navigation>* {
+  pointer-events: auto;
+}
+
+/* 隐藏Swiper默认的导航箭头 */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background: none !important;
+  border: none !important;
+  color: transparent !important;
+}
+
+/* 确保只显示自定义的SVG箭头 */
+.swiper-button-next svg,
+.swiper-button-prev svg {
+  display: block;
+}
+
+/* 修复轮播图切换闪烁问题 */
+.swiper-slide {
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.swiper-slide-active {
+  opacity: 1;
+}
+
+.swiper-slide-next,
+.swiper-slide-prev {
+  opacity: 0;
+}
+
+/* 确保背景图片在切换时不会闪烁 */
+.swiper-slide .slide-background {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* 字段卡片样式 */
+.field-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.field-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #4CAF50;
+}
+
+.field-thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-right: 16px;
+  position: relative;
+  background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.field-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.field-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.field-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.health-bar {
+  background: #e5e7eb;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.health-bar .inner {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+  background: #2E7D32;
+}
+
+.tag {
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+}
+
+.tag.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.tag.warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.tag.danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* 跑马灯滚动动画样式 */
+.pxl-image-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 20px 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+/* 滚动触发后的状态 */
+.pxl-image-marquee-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pxl-image-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll linear infinite;
+  animation-play-state: paused;
+  will-change: transform;
+  gap: 24px;
+}
+
+.pxl-image-marquee-item {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.marquee-card {
+  width: 260px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* 跑马灯滚动动画 */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* 从右到左滚动 - 动画本身已经是从右往左 */
+.pxl-image-marquee[data-direction="rtl"] {
+  animation-direction: normal;
+}
+
+/* 可调节速度 */
+.pxl-image-marquee[data-speed="10"] {
+  animation-duration: 60s;
+}
+
+.pxl-image-marquee[data-speed="20"] {
+  animation-duration: 40s;
+}
+
+.pxl-image-marquee[data-speed="30"] {
+  animation-duration: 30s;
+}
+
+.pxl-image-marquee[data-speed="40"] {
+  animation-duration: 20s;
+}
+
+.pxl-image-marquee[data-speed="50"] {
+  animation-duration: 15s;
+}
+
+/* 暂停动画（鼠标悬停时） */
+.pxl-image-marquee-wrapper:hover .pxl-image-marquee {
+  animation-play-state: paused;
+}
+
+/* 卡片内部动画效果 */
+.marquee-card .h-40 {
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-card .h-40::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.marquee-card:hover .h-40::before {
+  left: 100%;
+}
+
+/* 图标动画效果 */
+.marquee-card:hover .h-40 i {
+  transform: scale(1.1) rotate(5deg);
+  transition: all 0.3s ease;
+}
+
+/* 文字淡入效果 */
+.marquee-card h3,
+.marquee-card p {
+  transition: all 0.3s ease;
+}
+
+.marquee-card:hover h3 {
+  color: #4CAF50;
+  transform: translateY(-2px);
+}
+
+.marquee-card:hover p {
+  color: #374151;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .marquee-card {
+    width: 240px;
+  }
+
+  .pxl-image-marquee,
+  .pxl-image-marquee-item {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pxl-image-marquee-wrapper {
+    padding: 15px 0;
+  }
+
+  .marquee-card {
+    width: 220px;
+  }
+
+  .pxl-image-marquee,
+  .pxl-image-marquee-item {
+    gap: 16px;
+  }
+
+  .pxl-image-marquee[data-speed="30"] {
+    animation-duration: 25s;
+  }
+}
+
+@media (max-width: 480px) {
+  .marquee-card {
+    width: 200px;
+  }
+
+  .pxl-image-marquee,
+  .pxl-image-marquee-item {
+    gap: 12px;
+  }
+
+  .pxl-image-marquee[data-speed="30"] {
+    animation-duration: 20s;
+  }
+}
+
+/* 性能优化 - 硬件加速 */
+.pxl-image-marquee {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+.marquee-card {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* 优化动画性能 */
+.pxl-image-marquee-wrapper {
+  contain: layout style paint;
+}
+
+/* 减少重绘和重排 */
+.marquee-card * {
+  will-change: auto;
+}
+
+.marquee-card:hover {
+  will-change: transform;
+}
+
+/* 加载状态优化 */
+.marquee-card img {
+  transition: opacity 0.3s ease;
+}
+
+.marquee-card img[loading="lazy"] {
+  opacity: 0;
+}
+
+.marquee-card img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* 跑马灯动画状态类 */
+.marquee-animating {
+  animation-play-state: running !important;
+}
+
+/* 确保动画在移动设备上也能正常工作 */
+@media (prefers-reduced-motion: reduce) {
+  .pxl-image-marquee {
+    animation: none;
+  }
+
+  .pxl-image-marquee-wrapper:hover .pxl-image-marquee {
+    animation-play-state: running;
+  }
+}
+
+/* 增强的卡片悬停效果 */
+.marquee-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(25, 118, 210, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.marquee-card:hover::before {
+  opacity: 1;
+}
+
+/* 确保卡片内容在悬停效果之上 */
+.marquee-card>* {
+  position: relative;
+  z-index: 2;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .field-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .field-thumb {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .field-meta {
+    width: 100%;
+  }
+}

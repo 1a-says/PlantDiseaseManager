@@ -1,0 +1,427 @@
+/* 通用组件样式 */
+
+/* 加载状态 */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: var(--text-gray);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-gray);
+    border-top: 4px solid var(--primary-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.loading-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.loading-subtext {
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+/* 状态指示器 */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: var(--radius-small);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-indicator.success {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+}
+
+.status-indicator.warning {
+    background: rgba(255, 152, 0, 0.1);
+    color: var(--warning-color);
+}
+
+.status-indicator.error {
+    background: rgba(244, 67, 54, 0.1);
+    color: var(--error-color);
+}
+
+.status-indicator.info {
+    background: rgba(33, 150, 243, 0.1);
+    color: var(--info-color);
+}
+
+.status-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* 进度条 */
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--light-gray);
+    border-radius: var(--radius-small);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+    border-radius: var(--radius-small);
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+.progress-text {
+    position: absolute;
+    top: -25px;
+    right: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--primary-green);
+}
+
+/* 通知消息 */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--pure-white);
+    border-radius: var(--radius-medium);
+    box-shadow: var(--shadow-heavy);
+    padding: 20px;
+    min-width: 300px;
+    z-index: 3000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.notification.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.notification.error {
+    border-left: 4px solid var(--error-color);
+}
+
+.notification.info {
+    border-left: 4px solid var(--info-color);
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: var(--text-gray);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.notification-body {
+    color: var(--text-gray);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* 标签 */
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: var(--radius-small);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--pure-white);
+}
+
+.tag.primary {
+    background: var(--primary-green);
+}
+
+.tag.success {
+    background: var(--success-color);
+}
+
+.tag.warning {
+    background: var(--warning-color);
+}
+
+.tag.error {
+    background: var(--error-color);
+}
+
+.tag.info {
+    background: var(--info-color);
+}
+
+.tag.outline {
+    background: transparent;
+    border: 1px solid currentColor;
+}
+
+.tag.outline.primary {
+    color: var(--primary-green);
+}
+
+.tag.outline.success {
+    color: var(--success-color);
+}
+
+.tag.outline.warning {
+    color: var(--warning-color);
+}
+
+.tag.outline.error {
+    color: var(--error-color);
+}
+
+.tag.outline.info {
+    color: var(--info-color);
+}
+
+/* 卡片网格 */
+.card-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.card-grid.cols-1 { grid-template-columns: 1fr; }
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+    .card-grid.cols-2,
+    .card-grid.cols-3,
+    .card-grid.cols-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 分割线 */
+.divider {
+    height: 1px;
+    background: var(--border-gray);
+    margin: 20px 0;
+}
+
+.divider.vertical {
+    width: 1px;
+    height: auto;
+    margin: 0 20px;
+}
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-gray);
+}
+
+.empty-state i {
+    font-size: 64px;
+    color: var(--border-gray);
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+/* 工具提示 */
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-gray);
+    color: var(--pure-white);
+    padding: 8px 12px;
+    border-radius: var(--radius-small);
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--dark-gray);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.tooltip:hover::after,
+.tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 动画类 */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.slide-up {
+    animation: slideUp 0.5s ease;
+}
+
+.slide-down {
+    animation: slideDown 0.5s ease;
+}
+
+.scale-in {
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 响应式工具类 */
+.hide-mobile {
+    display: block;
+}
+
+.show-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none;
+    }
+    
+    .show-mobile {
+        display: block;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .main-header,
+    .prescription-actions,
+    .bulk-control,
+    .device-controls {
+        display: none;
+    }
+    
+    .control-module {
+        display: block !important;
+    }
+    
+    .prescription-section,
+    .device-map-section,
+    .control-panel-section {
+        box-shadow: none;
+        border: 1px solid var(--border-gray);
+    }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>数据管理</title>
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%234CAF50' d='M50 5a45 45 0 1 0 0 90 45 45 0 0 0 0-90z'/%3E%3Cpath fill='%23FAFAFA' d='M50 22c-10 12-16 22-18 30-2 9 3 18 18 26 15-8 20-17 18-26-2-8-8-18-18-30z'/%3E%3C/svg%3E" />
+
+  <!-- 字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2E7D32', // 农业绿 - 主色调
+            secondary: '#1976D2', // 科技蓝 - 辅助色
+            tertiary: '#4CAF50', // 亮绿 - 强调色
+            dark: '#1E293B', // 深色 - 文本
+            light: '#F8FAFC', // 浅色 - 背景
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+
+  <!-- 第三方库样式 -->
+
+  <!-- 应用样式 -->
+  <link rel="stylesheet" href="./assets/css/variables.css" />
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/layout.css" />
+  <link rel="stylesheet" href="./assets/css/components.css" />
+</head>
+
+<body>
+  <div id="app" class="app-root">
+    <!-- 顶部导航与侧边栏会由脚本注入 -->
+    <header id="app-header" class="app-header" role="banner" aria-label="顶部导航"></header>
+    <aside id="app-sidebar" class="app-sidebar" role="complementary" aria-label="侧边导航"></aside>
+    <main id="app-main" class="app-main" role="main" tabindex="-1" aria-live="polite"></main>
+  </div>
+
+  <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- 第三方库脚本 -->
+  <script src="https://unpkg.com/echarts@5.5.0/dist/echarts.min.js"></script>
+  <script src="https://unpkg.com/echarts@5.5.0/dist/extension/dataTool.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- 应用脚本（模块化） -->
+  <script type="module" src="./assets/js/app.js"></script>
+  <!-- 直接加载JavaScript库 -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wowjs@1.2.2/dist/wow.min.js"></script>
+
+  <!-- 敲敲云AI SDK -->
+  <script src="https://app.qiaoqiaoyun.com/chat/chat.js" id="e7e007dd52f67fe36365eff636bbffbd"></script>
+
+  <!-- AI助手自定义样式（仅覆盖样式，不改变功能） -->
+  <link rel="stylesheet" href="ai-assistant.css">
+
+  <!-- 初始化敲敲云AI（使用SDK原生功能） -->
+  <script>
+    createAiChat({
+      appId: "1971426275889324033",
+      // 支持top-left左上, top-right右上, bottom-left左下, bottom-right右下
+      iconPosition: "bottom-right"
+    });
+  </script>
+</body>
+
+</html>

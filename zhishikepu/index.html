@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>虫病科普</title>
+  <link rel="icon" href="data:,">
+
+  <!-- 导航栏样式 -->
+  <style>
+    /* 基础样式重置 */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow: hidden;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-image: url('images/beijing.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      /* 改为scroll提升性能 */
+      color: #236330;
+      line-height: 1.5;
+      /* 确保背景图覆盖整个页面，包括左右侧栏 */
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 导航栏样式 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .navbar-container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .navbar-container {
+        padding: 0 2rem;
+      }
+    }
+
+    .navbar-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1.25rem 0;
+    }
+
+    .navbar-nav {
+      display: none;
+      gap: 3.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .navbar-nav {
+        display: flex;
+      }
+    }
+
+    .navbar-nav a {
+      text-decoration: none;
+      color: #1e293b;
+      font-size: 1.3rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-nav a:hover {
+      color: #4CAF50;
+    }
+
+    .mobile-menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      color: #1e293b;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-menu.show {
+      display: block;
+    }
+
+    .mobile-menu-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.75rem 1rem;
+    }
+
+    .mobile-menu-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .mobile-menu-nav a {
+      text-decoration: none;
+      color: #236330;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu-nav a:hover {
+      color: #4CAF50;
+    }
+
+    .mobile-menu-nav a.active {
+      color: #4CAF50;
+    }
+
+    /* 导航链接高亮效果 */
+    .nav-link {
+      position: relative;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #4CAF50, #2E7D32);
+      transition: width 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link-active {
+      color: #4CAF50 !important;
+    }
+
+    .nav-link-active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #4CAF50, #2E7D32);
+      border-radius: 1px;
+    }
+
+    /* 页面内容调整 */
+    .page-content {
+      margin-top: 0;
+      padding-top: 0;
+      /* 位置将由JavaScript动态设置 */
+    }
+
+    /* 侧边栏样式调整 */
+    .sidebar {
+      margin-top: 0;
+      /* 位置将由JavaScript动态设置 */
+    }
+
+    /* 搜索框区域样式 */
+    .search-section {
+      margin-bottom: 20px;
+    }
+
+    /* 农作物分类区域样式 */
+    .crop-categories {
+      margin-top: 0;
+    }
+  </style>
+
+  <!-- 预加载关键资源 -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  </noscript>
+
+
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome 6.0 延迟加载 -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </noscript>
+</head>
+
+<body>
+  <!-- 导航栏 -->
+  <header class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-content">
+        <!-- 桌面端导航 - 居中 -->
+        <nav class="navbar-nav">
+          <a href="../index.html" class="nav-link">首页</a>
+          <a href="index.html" class="nav-link nav-link-active">虫病科普</a>
+          <a href="../Plant_foliar_disease_and_pest_detection-main/src/datas/index.html" class="nav-link">病虫害识别</a>
+          <a href="../prediction/enpre.html" class="nav-link">风险预测</a>
+          <a href="../control/index.html" class="nav-link">智能防控</a>
+          <a href="../farm/index.html" class="nav-link">数据管理</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container page-content">
+
+    <!-- 主要内容区域 -->
+    <div class="main-content" style="height: auto; min-height: calc(100vh - 160px);">
+      <!-- 左侧边栏 -->
+      <aside class="sidebar">
+        <!-- 搜索框 -->
+        <div class="search-section">
+          <div class="search-box">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" placeholder="搜索病虫害..." class="search-input">
+          </div>
+        </div>
+
+        <!-- 农作物分类 -->
+        <div class="crop-categories">
+          <div class="category-list">
+            <!-- 粮食作物 -->
+            <div class="category-group">
+              <div class="category-main" data-group="grain">
+                <i class="fas fa-seedling category-icon"></i>
+                <span>粮食作物</span>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+              </div>
+              <div class="category-submenu">
+                <div class="category-item" data-crop="rice">
+                  <span>水稻</span>
+                </div>
+                <div class="category-item" data-crop="wheat">
+                  <span>小麦</span>
+                </div>
+                <div class="category-item" data-crop="corn">
+                  <span>玉米</span>
+                </div>
+                <div class="category-item" data-crop="soybean">
+                  <span>大豆</span>
+                </div>
+                <div class="category-item" data-crop="millet">
+                  <span>小米</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 蔬菜作物 -->
+            <div class="category-group">
+              <div class="category-main" data-group="vegetable">
+                <i class="fas fa-carrot category-icon"></i>
+                <span>蔬菜作物</span>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+              </div>
+              <div class="category-submenu">
+                <div class="category-item" data-crop="tomato">
+                  <span>番茄</span>
+                </div>
+                <div class="category-item" data-crop="cucumber">
+                  <span>黄瓜</span>
+                </div>
+                <div class="category-item" data-crop="eggplant">
+                  <span>茄子</span>
+                </div>
+                <div class="category-item" data-crop="spinach">
+                  <span>菠菜</span>
+                </div>
+                <div class="category-item" data-crop="pepper">
+                  <span>辣椒</span>
+                </div>
+                <div class="category-item" data-crop="radish">
+                  <span>萝卜</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 经济作物 -->
+            <div class="category-group">
+              <div class="category-main" data-group="economic">
+                <i class="fas fa-coins category-icon"></i>
+                <span>经济作物</span>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+              </div>
+              <div class="category-submenu">
+                <div class="category-item" data-crop="cotton">
+                  <span>棉花</span>
+                </div>
+                <div class="category-item" data-crop="tea">
+                  <span>茶叶</span>
+                </div>
+                <div class="category-item" data-crop="peanut">
+                  <span>花生</span>
+                </div>
+                <div class="category-item" data-crop="rapeseed">
+                  <span>油菜</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 果树作物 -->
+            <div class="category-group">
+              <div class="category-main" data-group="fruit">
+                <i class="fas fa-apple-alt category-icon"></i>
+                <span>果树作物</span>
+                <i class="fas fa-chevron-right arrow-icon"></i>
+              </div>
+              <div class="category-submenu">
+                <div class="category-item" data-crop="grape">
+                  <span>葡萄</span>
+                </div>
+                <div class="category-item" data-crop="orange">
+                  <span>柑橘</span>
+                </div>
+                <div class="category-item" data-crop="banana">
+                  <span>香蕉</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 右侧内容区域 -->
+      <main class="content-area">
+        <div class="knowledge-graph-layout">
+          <!-- 知识图谱容器 -->
+          <div id="knowledgeGraph" class="knowledge-graph-panel"></div>
+
+          <!-- 病害/虫害核心特征 -->
+          <div class="feature-panel">
+            <div class="feature-card disease-feature">
+              <h3>病害核心特征</h3>
+              <ul>
+                <li>致病主体多为真菌、细菌、病毒、线虫等病原或不良环境因素。</li>
+                <li>症状表现为斑点、腐烂、萎蔫、畸形等，多伴随明显病斑或坏死。</li>
+                <li>既有可传播的感染性病害，也有由营养、气候造成的非感染性病害。</li>
+              </ul>
+            </div>
+            <div class="feature-card pest-feature">
+              <h3>虫害核心特征</h3>
+              <ul>
+                <li>致害主体为昆虫、螨类等取食性害虫，直接侵害叶片、茎秆或果实。</li>
+                <li>症状表现为蛀孔、啃食、卷叶、吐丝、黄化等，可造成植株形态破坏。</li>
+                <li>能够通过爬行、飞行等方式主动迁移，在田块间快速扩散。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 返回知识图谱按钮（仅在右侧卡片列表展示时显示） -->
+        <button id="backToGraphBtn" class="back-to-graph-btn" type="button">← 返回知识图谱</button>
+
+        <!-- 病虫害卡片网格（保留用于搜索结果显示） -->
+        <div class="disease-grid" style="display: none;">
+          <!-- 内容将由JavaScript动态更新 -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- 详情弹窗 -->
+  <div id="diseaseDetailModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">病虫害详情</h2>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="detail-section">
+          <h3 class="section-title">一、基础属性</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">病害类型：</span>
+              <span id="diseaseType" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">病原菌：</span>
+              <span id="pathogen" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">常见别名：</span>
+              <span id="aliases" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">主要寄主：</span>
+              <span id="host" class="value"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="section-title">二、发生规律</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">高发季节：</span>
+              <span id="season" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">适宜条件：</span>
+              <span id="conditions" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">传播途径：</span>
+              <span id="transmission" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">关键发病期：</span>
+              <span id="criticalPeriod" class="value"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="section-title">三、危害特征</h3>
+          <div id="symptoms" class="symptoms-container"></div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="section-title">四、防治措施</h3>
+          <div id="prevention" class="prevention-container"></div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="section-title">五、经济影响</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">产量损失：</span>
+              <span id="yieldLoss" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">防治成本：</span>
+              <span id="controlCost" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">品质影响：</span>
+              <span id="qualityImpact" class="value"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="section-title">六、监测与识别</h3>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="label">监测方法：</span>
+              <span id="monitoring" class="value"></span>
+            </div>
+            <div class="detail-item">
+              <span class="label">易混淆病害：</span>
+              <span id="confusion" class="value"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 导航栏JavaScript功能 -->
+  <script>
+
+    /**
+     * 移动端菜单功能
+     */
+    function initializeMobileMenu() {
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          mobileMenu.classList.toggle('show');
+        });
+
+        // 关闭移动端菜单（点击菜单项后）
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+          link.addEventListener('click', function () {
+            mobileMenu.classList.remove('show');
+          });
+        });
+      }
+    }
+
+    /**
+     * 调整侧边栏位置，使其上边缘与导航栏下边缘对齐
+     */
+    function adjustSidebarPosition() {
+      const navbar = document.querySelector('.navbar');
+      const sidebar = document.querySelector('.sidebar');
+      const pageContent = document.querySelector('.page-content');
+
+      if (navbar) {
+        const navbarHeight = navbar.offsetHeight;
+
+        // 调整页面内容区域的位置
+        if (pageContent) {
+          pageContent.style.marginTop = navbarHeight + 'px';
+        }
+
+        // 调整侧边栏位置（侧边栏的上边缘应该与导航栏下边缘对齐）
+        if (sidebar) {
+          sidebar.style.marginTop = '0';
+        }
+      }
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeMobileMenu();
+
+      // 调整侧边栏位置
+      adjustSidebarPosition();
+
+      // 延迟执行一次，确保所有样式都已加载
+      setTimeout(adjustSidebarPosition, 100);
+
+      // 监听窗口大小变化，重新计算
+      window.addEventListener('resize', adjustSidebarPosition);
+    });
+  </script>
+
+  <!-- ECharts 库 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+  <!-- 主脚本延迟加载，不阻塞页面渲染 -->
+  <script defer src="script.js?v=5"></script>
+
+  <!-- 非关键JavaScript库延迟加载 -->
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/wowjs@1.2.2/dist/wow.min.js"></script>
+
+  <!-- 敲敲云AI SDK 延迟加载 -->
+  <script defer src="https://app.qiaoqiaoyun.com/chat/chat.js" id="e7e007dd52f67fe36365eff636bbffbd"></script>
+
+  <!-- AI助手自定义样式（仅覆盖样式，不改变功能）- 延迟加载 -->
+  <link rel="preload" href="ai-assistant.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="ai-assistant.css">
+  </noscript>
+
+  <!-- 初始化敲敲云AI（使用SDK原生功能）- 延迟初始化确保SDK已加载 -->
+  <script>
+    // 等待SDK加载完成后再初始化
+    window.addEventListener('load', function () {
+      if (typeof createAiChat !== 'undefined') {
+        createAiChat({
+          appId: "1971426275889324033",
+          // 支持top-left左上, top-right右上, bottom-left左下, bottom-right右下
+          iconPosition: "bottom-right"
+        });
+      } else {
+        // 如果SDK还未加载，延迟重试
+        setTimeout(function () {
+          if (typeof createAiChat !== 'undefined') {
+            createAiChat({
+              appId: "1971426275889324033",
+              iconPosition: "bottom-right"
+            });
+          }
+        }, 500);
+      }
+    });
+  </script>
+</body>
+
+</html>

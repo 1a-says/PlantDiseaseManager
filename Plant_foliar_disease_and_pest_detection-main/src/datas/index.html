@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="environment" content="development">
+  <meta name="tailwind-mode" content="development">
+  <title>病虫害识别</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+
+  <!-- 预加载关键资源 -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  </noscript>
+  <!-- 开发环境使用CDN，生产环境请使用构建版本 -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+  <script>
+    // 配置Tailwind CSS
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2E7D32', // 农业绿 - 主色调
+            secondary: '#1976D2', // 科技蓝 - 辅助色
+            tertiary: '#4CAF50', // 亮绿 - 强调色
+            dark: '#1E293B', // 深色 - 文本
+            light: '#F8FAFC', // 浅色 - 背景
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+      // 禁用生产环境警告
+      future: {
+        hoverOnlyWhenSupported: true,
+      }
+    }
+
+    // 完全抑制Tailwind CSS警告
+    if (typeof window !== 'undefined') {
+      // 保存原始的console方法
+      const originalWarn = console.warn;
+      const originalError = console.error;
+
+      // 重写console.warn
+      console.warn = function (...args) {
+        const message = args[0];
+        if (typeof message === 'string') {
+          // 忽略所有Tailwind CSS相关的警告
+          if (message.includes('tailwindcss') ||
+            message.includes('cdn.tailwindcss.com') ||
+            message.includes('line-clamp') ||
+            message.includes('plugins') ||
+            message.includes('production')) {
+            return; // 忽略这些警告
+          }
+        }
+        originalWarn.apply(console, args);
+      };
+
+      // 重写console.error（以防万一）
+      console.error = function (...args) {
+        const message = args[0];
+        if (typeof message === 'string') {
+          if (message.includes('tailwindcss') ||
+            message.includes('cdn.tailwindcss.com')) {
+            return; // 忽略这些错误
+          }
+        }
+        originalError.apply(console, args);
+      };
+    }
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+  <!-- 自定义样式 -->
+  <link href="styles.css" rel="stylesheet">
+
+  <style>
+    /* 导航链接高亮效果 */
+    .nav-link {
+      position: relative;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #4CAF50, #2E7D32);
+      transition: width 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link-active {
+      color: #4CAF50 !important;
+    }
+
+    .nav-link-active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #4CAF50, #2E7D32);
+      border-radius: 1px;
+      animation: slideInFromLeft 0.5s ease;
+    }
+
+    @keyframes slideInFromLeft {
+      0% {
+        width: 0;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="font-inter text-dark scroll-smooth">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white shadow-md">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-center items-center py-4">
+        <!-- 桌面端导航 - 居中 -->
+        <nav class="hidden md:flex space-x-14">
+          <a href="../../../index.html"
+            class="nav-link text-dark hover:text-tertiary transition-colors text-[1.35rem] font-semibold">首页</a>
+          <a href="../../../zhishikepu/index.html"
+            class="nav-link text-dark hover:text-tertiary transition-colors text-[1.35rem] font-semibold">虫病科普</a>
+          <a href="index.html"
+            class="nav-link text-dark hover:text-tertiary transition-colors text-[1.35rem] font-semibold nav-link-active">病虫害识别</a>
+          <a href="../../../prediction/enpre.html"
+            class="nav-link text-dark hover:text-tertiary transition-colors text-[1.35rem] font-semibold">风险预测</a>
+          <a href="../../../control/index.html"
+            class="nav-link text-dark hover:text-tertiary transition-colors text-[1.35rem] font-semibold">智能防控</a>
+          <a href="../../../farm/index.html"
+            class="nav-link text-dark hover:text-tertiary transition-colors text-[1.35rem] font-semibold">数据管理</a>
+        </nav>
+
+        <!-- 移动端菜单按钮 -->
+        <button id="menu-toggle" class="md:hidden text-dark text-xl">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+      <div class="container mx-auto px-4 py-3">
+        <nav class="flex flex-col space-y-3">
+          <a href="../../../index.html"
+            class="text-dark hover:text-tertiary py-2 transition-colors text-[1.35rem] font-semibold">首页</a>
+          <a href="../../../zhishikepu/index.html"
+            class="text-dark hover:text-tertiary py-2 transition-colors text-[1.35rem] font-semibold">知识科普</a>
+          <a href="index.html"
+            class="text-dark hover:text-tertiary py-2 transition-colors text-[1.35rem] font-semibold text-tertiary">病虫害识别</a>
+          <a href="../../../../prediction/enpre.html"
+            class="text-dark hover:text-tertiary py-2 transition-colors text-[1.35rem] font-semibold">风险预测</a>
+          <a href="#cases"
+            class="text-dark hover:text-tertiary py-2 transition-colors text-[1.35rem] font-semibold">智能防控</a>
+          <a href="../../../farm/index.html"
+            class="text-dark hover:text-tertiary py-2 transition-colors text-[1.35rem] font-semibold">数据管理</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区域 -->
+  <main class="flex min-h-screen">
+
+    <!-- 主内容区域 -->
+    <div class="relative overflow-hidden"
+      style="background-image: url('./images/beijing.png'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; padding-top: 70px;">
+      <!-- 背景装饰 -->
+      <div class="absolute inset-0 bg-black/20"></div>
+
+      <!-- 内容区域 -->
+      <div class="relative z-10 px-4 sm:px-6 lg:px-8 pt-0 pb-8">
+        <!-- API状态显示 -->
+        <div id="apiStatus" class="mb-6"></div>
+        <!-- 病虫害识别页面 -->
+        <div id="recognition-content" class="tab-content">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- 上传区域 -->
+            <div class="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-8"
+              style="width: 100%; height: 600px; min-height: 600px; max-height: 600px; overflow: hidden;">
+              <h3 class="text-[1.3rem] font-bold mb-6 text-dark flex items-center">
+                <i class="fas fa-upload mr-3 text-dark"></i>
+                上传图像
+              </h3>
+
+              <!-- 固定大小的上传区域容器 -->
+              <div style="width: 100%; height: 380px; position: relative; overflow: hidden;">
+                <div id="upload-area"
+                  class="upload-area border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-tertiary transition-colors cursor-pointer h-80 flex flex-col items-center justify-center"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                  <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                  <p class="text-gray-600 mb-2">点击或拖拽上传图像或视频</p>
+                  <p class="text-sm text-gray-500">支持 JPG, PNG, JPEG, MP4, AVI, MOV 格式</p>
+                  <input type="file" id="image-input" accept="image/*,video/*,.mp4" class="hidden">
+                </div>
+
+                <div id="image-preview" class="hidden"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                  <img id="preview-img" class="w-full h-full object-cover rounded-lg shadow-md"
+                    style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+
+                <div id="video-preview" class="hidden"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                  <video id="preview-video" class="w-full h-full object-cover rounded-lg shadow-md" controls
+                    style="width: 100%; height: 100%; object-fit: cover;">
+                    您的浏览器不支持视频播放。
+                  </video>
+                  <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                    <button id="extract-frame-btn"
+                      class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                      <i class="fas fa-camera mr-2"></i>提取当前帧进行识别
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 摄像头预览 -->
+              <div id="camera-preview" class="hidden"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <div class="flex items-center text-blue-700">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    <span class="text-sm">摄像头已打开，请将植物叶片对准摄像头，点击拍照按钮进行识别</span>
+                  </div>
+                </div>
+                <video id="camera-video" class="w-full h-64 object-cover rounded-lg shadow-md" autoplay muted
+                  style="width: 100%; height: 300px; object-fit: cover;"></video>
+                <div class="mt-4 text-center">
+                  <button id="capture-btn"
+                    class="px-6 py-2 rounded-full bg-red-500 text-white font-medium hover:bg-red-600 transition-all mr-4 shadow-lg">
+                    <i class="fas fa-camera mr-2"></i>拍照识别
+                  </button>
+                  <button id="record-btn"
+                    class="px-6 py-2 rounded-full bg-green-500 text-white font-medium hover:bg-green-600 transition-all mr-4">
+                    <i class="fas fa-video mr-2"></i>开始录像
+                  </button>
+                  <button id="stop-record-btn"
+                    class="px-6 py-2 rounded-full bg-orange-500 text-white font-medium hover:bg-orange-600 transition-all mr-4 hidden">
+                    <i class="fas fa-stop mr-2"></i>结束录像
+                  </button>
+                  <button id="stop-camera-btn"
+                    class="px-6 py-2 rounded-full bg-gray-500 text-white font-medium hover:bg-gray-600 transition-all">
+                    <i class="fas fa-times mr-2"></i>关闭摄像头
+                  </button>
+                </div>
+                <div id="recording-indicator" class="hidden mt-2 text-center">
+                  <div class="inline-flex items-center px-3 py-1 rounded-full bg-red-500 text-white text-sm">
+                    <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+                    正在录像...
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex flex-wrap gap-4">
+                <button id="predict-btn"
+                  class="px-8 py-3 rounded-full bg-tertiary text-white font-medium hover:bg-tertiary/90 transform hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                  <i class="fas fa-brain mr-2"></i>开始识别
+                </button>
+                <button id="camera-btn"
+                  class="px-8 py-3 rounded-full bg-blue-500 text-white font-medium hover:bg-blue-600 transform hover:scale-105 transition-all shadow-lg">
+                  <i class="fas fa-camera mr-2"></i>打开摄像头
+                </button>
+                <button id="clear-btn"
+                  class="px-8 py-3 rounded-full bg-gray-500 text-white font-medium hover:bg-gray-600 transition-all">
+                  <i class="fas fa-trash mr-2"></i>清除图像
+                </button>
+              </div>
+            </div>
+
+            <!-- 预测结果 -->
+            <div class="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg p-8"
+              style="width: 100%; height: 600px; min-height: 600px; max-height: 600px; overflow: hidden;">
+              <h3 class="text-[1.3rem] font-bold mb-6 text-dark flex items-center">
+                <i class="fas fa-chart-pie mr-3 text-dark"></i>
+                识别结果
+              </h3>
+
+              <!-- 固定大小的识别结果容器 -->
+              <div style="width: 100%; height: 480px; position: relative; overflow-y: auto;">
+                <div id="prediction-result" class="text-center py-12"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                  <i class="fas fa-microscope text-6xl text-gray-300 mb-4"></i>
+                  <p class="text-gray-500 text-lg">请上传图像开始识别</p>
+                </div>
+
+                <!-- 识别结果显示区域 -->
+                <div id="result-display" class="hidden"
+                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow-y: auto; padding-right: 8px;">
+                  <!-- 主要结果 -->
+                  <div class="mb-8">
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border-2 border-green-200">
+                      <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xl font-bold text-dark">识别结果</h4>
+                        <span class="text-sm text-gray-600">置信度</span>
+                      </div>
+                      <div class="flex items-center justify-between">
+                        <span id="main-result" class="text-2xl font-bold text-green-600">请上传图像开始识别</span>
+                        <span id="main-confidence" class="text-lg font-semibold text-green-600">0.0%</span>
+                      </div>
+                      <div class="mt-4">
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                          <div id="main-progress"
+                            class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-1000"
+                            style="width: 0%"></div>
+                        </div>
+                      </div>
+
+                      <!-- 其他可能结果 -->
+                      <div class="mt-6">
+                        <h5 class="text-lg font-semibold text-dark mb-4">其他可能结果</h5>
+                        <div class="space-y-3">
+                          <div class="flex items-center justify-between bg-white rounded-lg p-4">
+                            <span id="result-2" class="text-lg font-medium text-dark">等待识别...</span>
+                            <div class="flex items-center">
+                              <span id="confidence-2" class="text-sm text-gray-600 mr-3">0.0%</span>
+                              <div class="w-20 bg-gray-200 rounded-full h-2">
+                                <div id="progress-2" class="bg-blue-400 h-2 rounded-full transition-all duration-1000"
+                                  style="width: 0.0%"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="flex items-center justify-between bg-white rounded-lg p-4">
+                            <span id="result-3" class="text-lg font-medium text-dark">等待识别...</span>
+                            <div class="flex items-center">
+                              <span id="confidence-3" class="text-sm text-gray-600 mr-3">0.0%</span>
+                              <div class="w-20 bg-gray-200 rounded-full h-2">
+                                <div id="progress-3" class="bg-orange-400 h-2 rounded-full transition-all duration-1000"
+                                  style="width: 0.0%"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 病虫害详细信息 -->
+                  <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                      <h5 class="text-xl font-semibold text-dark flex items-center">
+                        病虫害详细信息
+                      </h5>
+                      <button id="collect-btn"
+                        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-base">
+                        <i class="fas fa-bookmark mr-1"></i>点击收录
+                      </button>
+                    </div>
+
+                    <!-- 详细信息内容 -->
+                    <div id="disease-details" class="space-y-4">
+                      <!-- 基本信息 -->
+                      <div class="bg-white rounded-lg p-4 shadow-sm">
+                        <h6 class="font-semibold text-gray-800 mb-2 text-xl">基本信息</h6>
+                        <div class="grid grid-cols-2 gap-4 text-lg">
+                          <div class="flex items-center">
+                            <span class="text-gray-600">病害类型:</span>
+                            <span id="disease-type" class="font-medium text-gray-800 ml-1">-</span>
+                          </div>
+                          <div class="flex items-center">
+                            <span class="text-gray-600">危害程度:</span>
+                            <span id="severity-level" class="font-medium text-red-600 ml-1">-</span>
+                          </div>
+                          <div class="flex items-center">
+                            <span class="text-gray-600">易感植物:</span>
+                            <span id="susceptible-plants" class="font-medium text-gray-800 ml-1">-</span>
+                          </div>
+                          <div class="flex items-center">
+                            <span class="text-gray-600">发病季节:</span>
+                            <span id="disease-season" class="font-medium text-gray-800 ml-1">-</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 症状描述 -->
+                      <div class="bg-white rounded-lg p-4 shadow-sm">
+                        <h6 class="font-semibold text-gray-800 mb-2 text-xl">症状描述</h6>
+                        <p id="symptom-description" class="text-lg text-gray-700 leading-relaxed">-</p>
+                      </div>
+
+                      <!-- 防控策略 -->
+                      <div class="bg-white rounded-lg p-4 shadow-sm">
+                        <h6 class="font-semibold text-gray-800 mb-2 text-xl">防控策略</h6>
+                        <div id="control-strategies" class="space-y-2">
+                          <div class="text-lg text-gray-700">-</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 知识图谱 -->
+                  <div
+                    class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-200 mb-6">
+                    <h5 class="text-xl font-semibold text-dark mb-4 flex items-center">
+                      农业知识图谱
+                    </h5>
+                    <div id="knowledge-graph"
+                      class="bg-white rounded-lg p-4 shadow-sm min-h-96 flex items-center justify-center">
+                      <div class="text-center text-gray-500">
+                        <i class="fas fa-network-wired text-3xl mb-2"></i>
+                        <p class="text-lg">知识图谱加载中...</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 示例图像 -->
+          <div class="mt-4">
+            <h3 class="text-2xl font-bold mb-6 text-white text-center">示例图像</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div
+                class="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer card-hover"
+                onclick="useExampleImage('example1')">
+                <img src="images/棉花卷叶病毒害.jpg" alt="棉花卷叶病毒害" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <h4 class="font-bold text-dark">棉花卷叶病毒害</h4>
+                  <p class="text-sm text-gray-600">点击使用此示例</p>
+                </div>
+              </div>
+              <div
+                class="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer card-hover"
+                onclick="useExampleImage('example2')">
+                <img src="images/棉花叶蝉虫病害.jpg" alt="棉花叶蝉虫病害" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <h4 class="font-bold text-dark">棉花叶蝉虫病害</h4>
+                  <p class="text-sm text-gray-600">点击使用此示例</p>
+                </div>
+              </div>
+              <div
+                class="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer card-hover"
+                onclick="useExampleImage('example3')">
+                <img src="images/玉米大斑病.jpg" alt="玉米大斑病" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <h4 class="font-bold text-dark">玉米大斑病</h4>
+                  <p class="text-sm text-gray-600">点击使用此示例</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </main>
+
+
+
+  <!-- JavaScript -->
+  <script src="script.js?v=2.1"></script>
+
+  <!-- 导航栏移动端菜单功能 -->
+  <script>
+    // 移动端菜单切换
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          mobileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+  <!-- 直接加载JavaScript库 -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wowjs@1.2.2/dist/wow.min.js"></script>
+
+  <!-- 敲敲云AI SDK -->
+  <script src="https://app.qiaoqiaoyun.com/chat/chat.js" id="e7e007dd52f67fe36365eff636bbffbd"></script>
+
+  <!-- AI助手自定义样式（仅覆盖样式，不改变功能） -->
+  <link rel="stylesheet" href="ai-assistant.css">
+
+  <!-- 初始化敲敲云AI（使用SDK原生功能） -->
+  <script>
+    createAiChat({
+      appId: "1971426275889324033",
+      // 支持top-left左上, top-right右上, bottom-left左下, bottom-right右下
+      iconPosition: "bottom-right"
+    });
+  </script>
+
+</body>
+
+</html>
+
+</html>

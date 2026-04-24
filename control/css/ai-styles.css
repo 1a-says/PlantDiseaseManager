@@ -1,0 +1,393 @@
+/**
+ * AI相关样式
+ */
+
+/* AI推荐区域 */
+.ai-recommendations-section {
+    background: var(--background-green);
+    border: 2px solid var(--primary-green);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.ai-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ai-section-header h3 {
+    color: var(--primary-green);
+    font-size: 18px;
+    margin: 0;
+}
+
+.ai-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #94a3b8;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.active {
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* AI推荐卡片 */
+.ai-recommended {
+    border: 2px solid var(--primary-green);
+    background: var(--background-green);
+}
+
+.ai-score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.ai-reason {
+    color: var(--primary-green);
+    font-size: 13px;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.medicine-stats {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-gray);
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.stat-label {
+    color: var(--text-gray);
+}
+
+.stat-value {
+    color: var(--primary-green);
+    font-weight: bold;
+}
+
+/* 备选方案 */
+.alternative-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-gray);
+}
+
+.alternative-section h4 {
+    color: var(--primary-green);
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.alternative-item {
+    padding: 10px;
+    background: var(--background-green);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-gray);
+}
+
+.ai-score-small {
+    font-size: 11px;
+    color: var(--primary-green);
+    margin-top: 4px;
+}
+
+/* AI时机预测 */
+.ai-timing-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--background-green);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-green);
+}
+
+.ai-timing-section h4 {
+    color: var(--primary-green);
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.timing-recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.timing-day {
+    padding: 10px;
+    background: var(--pure-white);
+    border-radius: 6px;
+    border: 1px solid var(--border-gray);
+}
+
+.day-label {
+    font-weight: bold;
+    color: var(--primary-green);
+    margin-bottom: 6px;
+}
+
+.day-weather {
+    font-size: 12px;
+    color: var(--text-gray);
+    margin-bottom: 4px;
+}
+
+.day-reason {
+    font-size: 11px;
+    color: var(--primary-green);
+    font-style: italic;
+}
+
+.urgency-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.urgency-badge.urgency-high {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.urgency-badge.urgency-medium {
+    background: #fff7ed;
+    color: #d97706;
+}
+
+.urgency-badge.urgency-low {
+    background: var(--background-green);
+    color: var(--primary-green);
+    border: 1px solid var(--primary-green);
+}
+
+/* AI效果预测 */
+.ai-effectiveness-section {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--background-green);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-green);
+}
+
+.ai-effectiveness-section h4 {
+    color: var(--primary-green);
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.effectiveness-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.effect-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.effect-label {
+    font-size: 16px;
+    color: var(--text-gray);
+}
+
+.effect-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--primary-green);
+}
+
+/* 智能控制面板 */
+.intelligent-control-panel {
+    background: var(--background-green);
+    border: 1px solid var(--border-gray);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.control-switch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.switch-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.switch-label input[type="checkbox"] {
+    width: 40px;
+    height: 20px;
+    appearance: none;
+    background: #cbd5e1;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.switch-label input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+}
+
+.switch-label input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease;
+}
+
+.switch-label input[type="checkbox"]:checked::before {
+    left: 22px;
+}
+
+.switch-text {
+    color: #1e293b;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.switch-text i {
+    color: var(--primary-green);
+}
+
+/* 加载状态 */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: var(--primary-green);
+}
+
+.loading-state i {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.loading-state p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* AI优化建议 */
+.ai-optimization {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--pure-white);
+    border-radius: 8px;
+    border: 1px solid var(--border-gray);
+}
+
+.ai-optimization h4 {
+    color: var(--primary-green);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.ai-optimization-item {
+    padding: 8px;
+    background: var(--background-green);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--dark-gray);
+    border: 1px solid var(--border-gray);
+}
+
+/* 时机预测加载状态 */
+.loading-timing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    color: var(--primary-green);
+    font-size: 14px;
+}
+
+.loading-timing i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .ai-recommendations-section {
+        padding: 15px;
+    }
+
+    .intelligent-control-panel {
+        padding: 12px;
+    }
+
+    .effectiveness-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

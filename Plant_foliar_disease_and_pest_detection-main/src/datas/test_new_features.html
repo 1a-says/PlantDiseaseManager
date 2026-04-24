@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新功能测试页面</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8">病虫害识别系统 - 新功能测试</h1>
+        
+        <!-- 测试按钮 -->
+        <div class="bg-white rounded-lg p-6 mb-8 shadow-lg">
+            <h2 class="text-xl font-semibold mb-4">功能测试</h2>
+            <div class="space-x-4">
+                <button onclick="testDiseaseDetails('棉花卷叶病毒害')" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    测试棉花卷叶病毒害
+                </button>
+                <button onclick="testDiseaseDetails('棉花叶蝉虫病害')" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                    测试棉花叶蝉虫病害
+                </button>
+                <button onclick="testDiseaseDetails('玉米大斑病')" class="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600">
+                    测试玉米大斑病
+                </button>
+                <button onclick="clearTest()" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    清除测试
+                </button>
+            </div>
+        </div>
+        
+        <!-- 病虫害详细信息展示区域 -->
+        <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <h5 class="text-lg font-semibold text-dark flex items-center">
+                    <i class="fas fa-info-circle mr-2 text-orange-500"></i>
+                    病虫害详细信息
+                </h5>
+                <button id="collect-btn" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors text-sm">
+                    <i class="fas fa-bookmark mr-1"></i>点击收录
+                </button>
+            </div>
+            
+            <!-- 详细信息内容 -->
+            <div id="disease-details" class="space-y-4">
+                <!-- 基本信息 -->
+                <div class="bg-white rounded-lg p-4 shadow-sm">
+                    <h6 class="font-semibold text-gray-800 mb-2">基本信息</h6>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">病害类型:</span>
+                            <span id="disease-type" class="font-medium text-gray-800">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">危害程度:</span>
+                            <span id="severity-level" class="font-medium text-red-600">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">易感植物:</span>
+                            <span id="susceptible-plants" class="font-medium text-gray-800">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">发病季节:</span>
+                            <span id="disease-season" class="font-medium text-gray-800">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 症状描述 -->
+                <div class="bg-white rounded-lg p-4 shadow-sm">
+                    <h6 class="font-semibold text-gray-800 mb-2">症状描述</h6>
+                    <p id="symptom-description" class="text-sm text-gray-700 leading-relaxed">-</p>
+                </div>
+                
+                <!-- 防控策略 -->
+                <div class="bg-white rounded-lg p-4 shadow-sm">
+                    <h6 class="font-semibold text-gray-800 mb-2">防控策略</h6>
+                    <div id="control-strategies" class="space-y-2">
+                        <div class="text-sm text-gray-700">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 知识图谱 -->
+        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-200 mb-6">
+            <h5 class="text-lg font-semibold text-dark mb-4 flex items-center">
+                <i class="fas fa-project-diagram mr-2 text-purple-500"></i>
+                知识图谱
+            </h5>
+            <div id="knowledge-graph" class="bg-white rounded-lg p-4 shadow-sm min-h-64 flex items-center justify-center">
+                <div class="text-center text-gray-500">
+                    <i class="fas fa-network-wired text-3xl mb-2"></i>
+                    <p>知识图谱加载中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 病虫害详细信息数据库
+        const diseaseDatabase = {
+            '棉花卷叶病毒害': {
+                type: '病毒性病害',
+                severity: '高',
+                susceptiblePlants: '棉花',
+                season: '夏秋季',
+                symptoms: '叶片卷曲、黄化、生长迟缓，严重时整株矮化。叶片边缘向内卷曲，叶面出现黄绿相间的斑驳症状，植株生长受到严重影响。',
+                controlStrategies: [
+                    '选用抗病品种，提高植株抗病能力',
+                    '及时清除田间杂草，减少病毒传播媒介',
+                    '合理密植，改善田间通风透光条件',
+                    '加强田间管理，及时施肥浇水',
+                    '发现病株及时拔除并销毁',
+                    '使用病毒抑制剂进行化学防治'
+                ],
+                relatedDiseases: ['棉花黄萎病', '棉花枯萎病', '棉花叶斑病'],
+                relatedPests: ['棉蚜', '棉铃虫', '棉叶螨'],
+                prevention: ['种子消毒', '轮作倒茬', '生物防治']
+            },
+            '棉花叶蝉虫病害': {
+                type: '虫害',
+                severity: '中',
+                susceptiblePlants: '棉花',
+                season: '夏秋季',
+                symptoms: '叶片出现黄白色斑点，严重时叶片枯黄脱落。叶蝉刺吸叶片汁液，造成叶片失绿，影响光合作用，导致植株生长不良。',
+                controlStrategies: [
+                    '利用天敌如瓢虫、草蛉等进行生物防治',
+                    '使用黄色粘虫板诱杀成虫',
+                    '合理使用杀虫剂，避免产生抗药性',
+                    '加强田间管理，及时清除杂草',
+                    '种植诱虫植物，集中防治',
+                    '采用物理防治方法如灯光诱杀'
+                ],
+                relatedDiseases: ['棉花叶斑病', '棉花炭疽病'],
+                relatedPests: ['棉蚜', '棉铃虫', '棉叶螨'],
+                prevention: ['天敌保护', '环境调控', '抗虫品种']
+            },
+            '玉米大斑病': {
+                type: '真菌性病害',
+                severity: '高',
+                susceptiblePlants: '玉米',
+                season: '夏秋季',
+                symptoms: '叶片上出现大型椭圆形病斑，病斑中央灰白色，边缘深褐色。严重时病斑连片，叶片枯死，影响玉米产量和品质。',
+                controlStrategies: [
+                    '选用抗病品种，提高植株抗病能力',
+                    '合理密植，改善田间通风透光条件',
+                    '及时清除田间病残体，减少病原菌',
+                    '轮作倒茬，避免连作',
+                    '使用杀菌剂进行化学防治',
+                    '加强田间管理，提高植株抗病性'
+                ],
+                relatedDiseases: ['玉米小斑病', '玉米锈病', '玉米纹枯病'],
+                relatedPests: ['玉米螟', '粘虫', '蚜虫'],
+                prevention: ['品种选择', '栽培管理', '化学防治']
+            }
+        };
+        
+        // 显示病虫害详细信息
+        function showDiseaseDetails(diseaseName) {
+            console.log('显示病虫害详细信息:', diseaseName);
+            
+            const diseaseInfo = diseaseDatabase[diseaseName];
+            if (!diseaseInfo) {
+                console.log('未找到病虫害信息:', diseaseName);
+                return;
+            }
+            
+            // 更新基本信息
+            document.getElementById('disease-type').textContent = diseaseInfo.type;
+            document.getElementById('severity-level').textContent = diseaseInfo.severity;
+            document.getElementById('susceptible-plants').textContent = diseaseInfo.susceptiblePlants;
+            document.getElementById('disease-season').textContent = diseaseInfo.season;
+            
+            // 更新症状描述
+            document.getElementById('symptom-description').textContent = diseaseInfo.symptoms;
+            
+            // 更新防控策略
+            const strategiesContainer = document.getElementById('control-strategies');
+            strategiesContainer.innerHTML = '';
+            
+            diseaseInfo.controlStrategies.forEach((strategy, index) => {
+                const strategyDiv = document.createElement('div');
+                strategyDiv.className = 'flex items-start space-x-2 text-sm text-gray-700';
+                strategyDiv.innerHTML = `
+                    <span class="flex-shrink-0 w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-semibold">${index + 1}</span>
+                    <span class="leading-relaxed">${strategy}</span>
+                `;
+                strategiesContainer.appendChild(strategyDiv);
+            });
+        }
+        
+        // 生成知识图谱
+        function generateKnowledgeGraph(diseaseName) {
+            console.log('生成知识图谱:', diseaseName);
+            
+            const diseaseInfo = diseaseDatabase[diseaseName];
+            if (!diseaseInfo) {
+                console.log('未找到病虫害信息:', diseaseName);
+                return;
+            }
+            
+            const graphContainer = document.getElementById('knowledge-graph');
+            
+            // 创建SVG画布
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '100%');
+            svg.setAttribute('height', '250');
+            svg.setAttribute('viewBox', '0 0 400 250');
+            svg.className = 'w-full h-full';
+            
+            // 定义节点位置
+            const nodes = [
+                { id: 'center', name: diseaseName, x: 200, y: 125, type: 'center' },
+                { id: 'disease1', name: diseaseInfo.relatedDiseases[0] || '相关病害', x: 100, y: 50, type: 'disease' },
+                { id: 'disease2', name: diseaseInfo.relatedDiseases[1] || '相关病害', x: 300, y: 50, type: 'disease' },
+                { id: 'disease3', name: diseaseInfo.relatedDiseases[2] || '相关病害', x: 100, y: 200, type: 'disease' },
+                { id: 'pest1', name: diseaseInfo.relatedPests[0] || '相关害虫', x: 300, y: 200, type: 'pest' },
+                { id: 'pest2', name: diseaseInfo.relatedPests[1] || '相关害虫', x: 50, y: 125, type: 'pest' },
+                { id: 'pest3', name: diseaseInfo.relatedPests[2] || '相关害虫', x: 350, y: 125, type: 'pest' }
+            ];
+            
+            // 绘制连接线
+            nodes.forEach(node => {
+                if (node.id !== 'center') {
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', nodes[0].x);
+                    line.setAttribute('y1', nodes[0].y);
+                    line.setAttribute('x2', node.x);
+                    line.setAttribute('y2', node.y);
+                    line.setAttribute('stroke', '#e5e7eb');
+                    line.setAttribute('stroke-width', '2');
+                    svg.appendChild(line);
+                }
+            });
+            
+            // 绘制节点
+            nodes.forEach(node => {
+                // 节点圆圈
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', node.x);
+                circle.setAttribute('cy', node.y);
+                circle.setAttribute('r', node.type === 'center' ? '25' : '18');
+                
+                // 根据类型设置颜色
+                let color = '#3b82f6'; // 默认蓝色
+                if (node.type === 'center') color = '#ef4444'; // 中心节点红色
+                else if (node.type === 'disease') color = '#f59e0b'; // 病害橙色
+                else if (node.type === 'pest') color = '#10b981'; // 害虫绿色
+                
+                circle.setAttribute('fill', color);
+                circle.setAttribute('stroke', '#ffffff');
+                circle.setAttribute('stroke-width', '2');
+                svg.appendChild(circle);
+                
+                // 节点文字
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', node.x);
+                text.setAttribute('y', node.y + 5);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-size', node.type === 'center' ? '10' : '8');
+                text.setAttribute('fill', '#ffffff');
+                text.setAttribute('font-weight', 'bold');
+                text.textContent = node.name.length > 6 ? node.name.substring(0, 6) + '...' : node.name;
+                svg.appendChild(text);
+            });
+            
+            // 添加图例
+            const legend = document.createElement('div');
+            legend.className = 'mt-4 flex justify-center space-x-4 text-xs';
+            legend.innerHTML = `
+                <div class="flex items-center space-x-1">
+                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <span>目标病害</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <span>相关病害</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <span>相关害虫</span>
+                </div>
+            `;
+            
+            // 清空容器并添加新内容
+            graphContainer.innerHTML = '';
+            graphContainer.appendChild(svg);
+            graphContainer.appendChild(legend);
+        }
+        
+        // 测试函数
+        function testDiseaseDetails(diseaseName) {
+            showDiseaseDetails(diseaseName);
+            generateKnowledgeGraph(diseaseName);
+        }
+        
+        // 清除测试
+        function clearTest() {
+            document.getElementById('disease-type').textContent = '-';
+            document.getElementById('severity-level').textContent = '-';
+            document.getElementById('susceptible-plants').textContent = '-';
+            document.getElementById('disease-season').textContent = '-';
+            document.getElementById('symptom-description').textContent = '-';
+            document.getElementById('control-strategies').innerHTML = '<div class="text-sm text-gray-700">-</div>';
+            
+            const graphContainer = document.getElementById('knowledge-graph');
+            graphContainer.innerHTML = `
+                <div class="text-center text-gray-500">
+                    <i class="fas fa-network-wired text-3xl mb-2"></i>
+                    <p>知识图谱加载中...</p>
+                </div>
+            `;
+        }
+        
+        // 收录按钮事件
+        document.getElementById('collect-btn').addEventListener('click', function() {
+            const collectBtn = this;
+            const originalText = collectBtn.innerHTML;
+            
+            // 显示收录成功状态
+            collectBtn.innerHTML = '<i class="fas fa-check mr-1"></i>已收录';
+            collectBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+            collectBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+            collectBtn.disabled = true;
+            
+            // 显示成功提示
+            const message = document.createElement('div');
+            message.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 flex items-center space-x-2';
+            message.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>病虫害信息已收录到个人收藏</span>
+            `;
+            document.body.appendChild(message);
+            
+            // 2秒后恢复按钮状态
+            setTimeout(() => {
+                collectBtn.innerHTML = originalText;
+                collectBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                collectBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                collectBtn.disabled = false;
+                
+                if (document.body.contains(message)) {
+                    document.body.removeChild(message);
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
